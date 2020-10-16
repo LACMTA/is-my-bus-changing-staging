@@ -1,1 +1,8 @@
-
+#busChanges div span {
+    display: inline-block;
+    width: 200px;
+    padding: 20px;
+    margin: 20px;
+    border: #888 solid 1px;
+    text-align: center;
+}
