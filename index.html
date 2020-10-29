@@ -16,22 +16,26 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-sm" >
-                    <h1 style="text-align: center;">Is My Bus Changing <br aria-hidden="true">With Nextgen?</h1>
+                    <h1>Is My Bus Line Changing?</h1>
                 </div>
                 <div class="col-md-2"></div>
             </div>
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-sm">
+                <div class="col-md-4"></div>
+                <div class="col-sm-4">
                     <form id="busQuery" style="text-align: center;">
                         <div class="form-group">
-                            <label for="myBusLine">What bus line do you ride?</label>
-                            <select class="form-control form-control-lg" id="myBusLine">
-                                <option>select a bus line</option>
-                            </select>
+                            <label for="myBusLine">Which bus line do you ride?</label>
+                            <input type="text" class="form-control form-control-lg" id="myBusLine" placeholder="enter a line" list="busLines">
+                            <datalist id="busLines"></datalist>
                         </div>
                     </form>
-                    
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-sm" >
                     <div id="busChanges"></div>
                 </div>
                 <div class="col-md-2"></div>
