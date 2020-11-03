@@ -5,7 +5,7 @@ const SHAKEUP_CHANGES = {
   more_trips: "More Trips",
   more_frequency: "More Frequency",
   line_merged: "This Metro Rapid Line is merging with ",
-  line_removed: "Line Removed",  
+  line_removed: "Line Removed",
   line_rerouted: "Line Rerouted",
   stops_changed: "Stops Changed",
   owl_changed: "Owl Service Changed"
@@ -13,6 +13,27 @@ const SHAKEUP_CHANGES = {
 
 const TRANSIT_APP = "Download the <a href=\"#\">Transit App</a> on your smartphone to help plan your trips!";
 const PDF_SCHEDULES = "See more details in the <a href=\"#\">schedule PDF</a>.";
+
+/**
+ * Handle language switching.
+ */
+
+$('[lang="es"]').hide();
+
+$('#switchLanguage').click(function() {
+  if ($('#currentLanguage').val() == 'en') {
+    $('#currentLanguage').val('es');
+    $('#myBusLine').attr('placeholder', 'selecciona su autobús');
+    $('#switchLanguage').text('english');
+  } else {
+    $('#currentLanguage').val('en');
+    $('#myBusLine').attr('placeholder', 'select your line');
+    $('#switchLanguage').text('español');
+  }
+  
+  $('[lang="es"]').toggle();
+  $('[lang="en"]').toggle();
+});
 
 
 let shakeupData = {};
@@ -53,7 +74,11 @@ $('#myBusLine').change(function (e) {
       myChanges
     );
   } else {
-    myChanges = "<h2>We couldn't find that line, please try again!</h2>";
+    if (myBusLine.trim() == "") {
+      myChanges = "";
+    } else {
+      myChanges = "<h2>We couldn't find that line, please try again!</h2>";
+    }
     
     $('#busChanges').html(
       myChanges
