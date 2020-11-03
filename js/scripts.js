@@ -46,7 +46,7 @@ $('#myBusLine').change(function (e) {
   if (busFound != null) {
     myChanges = "<h2>Line " + myBusLine + " - " + busFound.gsx$linedescription.$t + "</h2>";
     myChanges += "<li>" + TRANSIT_APP + "</li>";
-    myChanges += "<li>" + PDF_SCHEDULES + "</li>";
+    
     myChanges += "<div>" + getChanges(busFound) + "</div>"
 
     $('#busChanges').html(
@@ -71,6 +71,7 @@ function getChanges(data) {
   if (data.gsx$shakeupinfo.$t == "no") {
     returnValues += "<li>" + SHAKEUP_CHANGES.no_changes + "</li>";
   } else {
+    returnValues += "<li>" + PDF_SCHEDULES + "</li>";
     returnValues += "<li>" + SHAKEUP_CHANGES.changes + "</li>";
 
     if (data.gsx$lineremoved.$t == "yes") {
