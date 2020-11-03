@@ -1,9 +1,13 @@
-#busChanges div span {
+ul#busChanges {
+    margin: 0;
+    padding: 0;
+}
+#busChanges li {
+    list-style: none;
     display: inline-block;
-    width: 200px;
-    padding: 20px;
+    width: 100%;
     margin: 20px;
-    border: #888 solid 1px;
+    font-size: larger;
 }
 
 * {

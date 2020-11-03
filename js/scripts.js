@@ -1,82 +1,105 @@
-const DATA_URL = "https://spreadsheets.google.com/feeds/list/15oORluAXFWZBD1thTLHIZADg2fBNhJ2LrcLCDXftcpM/od6/public/values?alt=json";
-const NEXTGEN_CHANGES = {
-  line_removed: "Line Removed",
-  line_merged: "Line Merged",
-  line_rerouted: "Line Re-routed",
+const SHAKEUP_DATA_URL = "https://spreadsheets.google.com/feeds/list/15oORluAXFWZBD1thTLHIZADg2fBNhJ2LrcLCDXftcpM/od6/public/values?alt=json";
+const SHAKEUP_CHANGES = {
+  no_changes: "Your bus line has no changes at this time. Please check back as we approach June 2021 for updates.",
+  changes: "Your line has changes:",
+  more_trips: "More Trips",
+  more_frequency: "More Frequency",
+  line_merged: "This Metro Rapid Line is merging with ",
+  line_removed: "Line Removed",  
+  line_rerouted: "Line Rerouted",
   stops_changed: "Stops Changed",
-  owl_discontinued: "Owl Discontinued"
+  owl_changed: "Owl Service Changed"
 };
 
-let allBusChanges = {};
+const TRANSIT_APP = "Download the Transit App on your smartphone to help plan your trips!";
+const PDF_SCHEDULES = "See more details in the schedule PDF.";
 
-$.getJSON(DATA_URL, function (data) {
-  allBusChanges = data.feed.entry;
 
-  $(document).ready(function () {
-    $(allBusChanges).each(function () {
-      $('#busLines').append('<option>' + this.gsx$linenumber.$t + '</option>');
-    });
+let shakeupData = {};
+let AJAX = [];
+
+function getData(url) {
+  return $.getJSON(url);
+}
+
+AJAX.push(getData(SHAKEUP_DATA_URL))
+
+$.when.apply($, AJAX).done(function() {
+  shakeupData = arguments[0].feed.entry;
+  $.each(shakeupData, function () {
+    $('#busLines').append('<option>' + this.gsx$linenumber.$t + '</option>');
   });
 });
 
 $('#myBusLine').change(function (e) {
   let myBusLine = $('#myBusLine').val();
   let myChanges = "";
+  let busFound = null;
   e.preventDefault();
 
-  $(allBusChanges).each(function (index, element) {
+  myChanges += 
+
+  $(shakeupData).each(function (index, element) {
     if (element.gsx$linenumber.$t == myBusLine) {
-      myChanges = "<h2>Line " + myBusLine + " - " + element.gsx$linedescription.$t + "</h2>";
-
-      if (element.gsx$linechanged.$t == 'no') {
-        myChanges += "<h3>No changes to your line right now</h3>";
-        myChanges += "<div>Sign up here if you'd like to be emailed about changes to your line </div>";
-      } else {
-        myChanges += "<h3>Changes affecting your line:</h3>";
-        myChanges += "<div>" + getChanges(element) + "</div>"
-        myChanges += "<a href=\"" + element.gsx$url.$t + "\">View the new timetable for details.</a>";
-      }
-
-      $('#busChanges').html(
-        myChanges
-      );
-
-      $('#myBusLine').blur();
-      return false;
-    } else {
-      myChanges = "<h2>We couldn't find that line, please try again!</h2>";
-      $('#busChanges').html(
-        myChanges
-      );
+      busFound = element;
     }
   });
+  
+  if (busFound != null) {
+    myChanges = "<h2>Line " + myBusLine + " - " + busFound.gsx$linedescription.$t + "</h2>";
+      myChanges += "<div>" + getChanges(busFound) + "</div>"
+
+      $('#busChanges').html(
+        myChanges
+      );
+  } else {
+    myChanges = "<h2>We couldn't find that line, please try again!</h2>";
+    
+    $('#busChanges').html(
+      myChanges
+    );
+  }
+
   $('#myBusLine').blur();
+
   return false;
 });
 
 function getChanges(data) {
   let returnValues = "";
 
-
-  if (data.gsx$lineremoved.$t == "yes") {
-    returnValues += "<span>" + NEXTGEN_CHANGES.line_removed + "</span>";
+  if (data.gsx$shakeupinfo.$t == "no") {
+    returnValues += "<li>" + SHAKEUP_CHANGES.no_changes + "</li>";
   } else {
-    if (data.gsx$linemerged.$t == "yes") {
-      returnValues += "<span>" + NEXTGEN_CHANGES.line_merged + "</span>";
-    }
+    returnValues += "<li>" + SHAKEUP_CHANGES.changes + "</li>";
 
-    if (data.gsx$linechanged.$t == "yes") {
-      returnValues += "<span>" + NEXTGEN_CHANGES.line_rerouted + "</span>";
-    }
+    if (data.gsx$lineremoved.$t == "yes") {
+      returnValues += "<li>" + SHAKEUP_CHANGES.line_removed + "</li>";
+    } else {
+      if (data.gsx$moretrips.$t == "yes") {
+        returnValues += "<li>" + SHAKEUP_CHANGES.more_trips + "</li>";
+      }
 
-    if (data.gsx$stopschanged.$t == "yes") {
-      returnValues += "<span>" + NEXTGEN_CHANGES.stops_changed + "</span>";
-    }
+      if (data.gsx$morefrequency.$t == "yes") {
+        returnValues += "<li>" + SHAKEUP_CHANGES.more_frequency + "</li>";
+      }
 
-    if (data.gsx$owldiscontinued.$t == "yes") {
-      returnValues += "<span>" + NEXTGEN_CHANGES.owl_discontinued + "</span>";
+      if (data.gsx$linemerged.$t == "yes") {
+        returnValues += "<li>" + SHAKEUP_CHANGES.line_merged + data.gsx$alternatives.$t + "</li>";
+      }
+  
+      if (data.gsx$linererouted.$t == "yes") {
+        returnValues += "<li>" + SHAKEUP_CHANGES.line_rerouted + "</li>";
+      }
+  
+      if (data.gsx$stopschanged.$t == "yes") {
+        returnValues += "<li>" + SHAKEUP_CHANGES.stops_changed + "</li>";
+      }
+  
+      if (data.gsx$owlchanged.$t == "yes") {
+        returnValues += "<li>" + SHAKEUP_CHANGES.owl_changed + "</li>";
+      }
     }
   }
-
   return returnValues;
 }
