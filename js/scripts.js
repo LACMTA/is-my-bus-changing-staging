@@ -11,8 +11,8 @@ const SHAKEUP_CHANGES = {
   owl_changed: "Owl Service Changed"
 };
 
-const TRANSIT_APP = "Download the Transit App on your smartphone to help plan your trips!";
-const PDF_SCHEDULES = "See more details in the schedule PDF.";
+const TRANSIT_APP = "Download the <a href=\"#\">Transit App</a> on your smartphone to help plan your trips!";
+const PDF_SCHEDULES = "See more details in the <a href=\"#\">schedule PDF</a>.";
 
 
 let shakeupData = {};
@@ -37,8 +37,6 @@ $('#myBusLine').change(function (e) {
   let busFound = null;
   e.preventDefault();
 
-  myChanges += 
-
   $(shakeupData).each(function (index, element) {
     if (element.gsx$linenumber.$t == myBusLine) {
       busFound = element;
@@ -47,11 +45,13 @@ $('#myBusLine').change(function (e) {
   
   if (busFound != null) {
     myChanges = "<h2>Line " + myBusLine + " - " + busFound.gsx$linedescription.$t + "</h2>";
-      myChanges += "<div>" + getChanges(busFound) + "</div>"
+    myChanges += "<li>" + TRANSIT_APP + "</li>";
+    myChanges += "<li>" + PDF_SCHEDULES + "</li>";
+    myChanges += "<div>" + getChanges(busFound) + "</div>"
 
-      $('#busChanges').html(
-        myChanges
-      );
+    $('#busChanges').html(
+      myChanges
+    );
   } else {
     myChanges = "<h2>We couldn't find that line, please try again!</h2>";
     
