@@ -1,3 +1,27 @@
-html {
+* {
     font-family: 'Open Sans', sans-serif;
+}
+
+.languageIcon {
+    color: #333;
+}
+
+.blue {
+    color: #007bff;
+}
+
+#switchLanguageMenu .dropdown-item {
+    height: 2em;
+}
+
+#collapseLanguages {
+    margin-top: 5px;
+    border-bottom: solid 1px #bbb;
+}
+
+.languageSelection {
+    display: block;
+    padding: 20px 5px;
+    border-top: solid 1px #bbb;
+    color: #333;
 }
