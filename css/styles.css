@@ -1,13 +1,42 @@
+/* General Styles */
 * {
     font-family: 'Open Sans', sans-serif;
 }
 
-.languageIcon {
-    color: #333;
+body {
+    font-size: .9em;
+    font-weight: 300;
+    line-height: 1.7;
+    text-align: left;
+    color: #000;
+}
+
+a:link, a:hover, a:visited {
+    color: #077FC4;
+    text-decoration: none;
+}
+
+a:link.black {
+    color: #000;
 }
 
 .blue {
-    color: #007bff;
+    color: #077FC4;
+}
+
+.black {
+    color: #000;
+}
+
+h1 {
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+/* Language Selection */
+
+.languageIcon {
+    color: #000;
 }
 
 #switchLanguageMenu .dropdown-item {
@@ -20,13 +49,16 @@
 }
 
 .languageSelection {
+    font-size: 1.4em;
     display: block;
     padding: 20px 5px;
     border-top: solid 1px #bbb;
-    color: #333;
+    color: #000;
 }
 
-.resultRow {
+/* Page Layout */
+
+.resultView {
     display: none;
 }
 
@@ -34,14 +66,39 @@
     display: none;
 }
 
-.lineDescription {
-    font-weight: bold;
-}
-
-.keyChanges {
+#keyChanges {
     margin-top: 2em;
 }
 
 #busQuery {
     margin-top: 2em;
+}
+
+/* Styles */
+
+#keyChanges p, #details p, #tips p {
+    margin-top: 2em;
+    font-weight: bold;
+}
+
+#keyChanges li {
+    font-size: 1.6em;
+    font-weight: 600;
+}
+
+#searchAgain {
+    margin-top: 2em;
+}
+#searchAgainButton {
+    font-weight: bold;
+}
+
+#lineDescription {
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.changeDescription {
+    font-size: 1.6em;
+    font-weight: 600;
 }

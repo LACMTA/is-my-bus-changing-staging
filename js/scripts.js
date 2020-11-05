@@ -16,11 +16,11 @@ const TRANSIT_APP = "Download the <a href=\"#\">Transit App</a> on your smartpho
 const PDF_SCHEDULES = "See more details in the <a href=\"#\">schedule PDF</a>.";
 const TAP = "Load fare at <a href=\"#\">taptogo.net</a> or download the <a href=\"#\">TAP App<\a>";
 
-$('#searchAgain').click(function() {
-  $('.queryRow').each(function() {
+$('#searchAgainButton').click(function() {
+  $('.queryView').each(function() {
     $(this).show();
   });
-  $('.resultRow').hide();
+  $('.resultView').hide();
   $('#busChanges').text('');
   $('#myBusLine').val('');
 });
@@ -31,6 +31,7 @@ $('#searchAgain').click(function() {
 
 $('#switchLanguage').click(function() {
   $(this).toggleClass('blue');
+  $(this).toggleClass('black');
   $('.bi-caret-down-fill').toggle();
   $('.bi-caret-up-fill').toggle();
 });
@@ -85,9 +86,9 @@ $('#myBusLine').change(function (e) {
   
   if (busFound != null) {
     myChanges = "<h1>Bus Line " + myBusLine + "</h1>";
-    myChanges += "<p class=\"lineDescription\">" + busFound.gsx$linedescription.$t + "</p>";
+    myChanges += "<p id=\"lineDescription\">" + busFound.gsx$linedescription.$t + "</p>";
     
-    myChanges += "<div class=\"keyChanges\">" + getChanges(busFound) + "</div>"
+    myChanges += getChanges(busFound);
 
 
 
@@ -108,58 +109,81 @@ $('#myBusLine').change(function (e) {
 
   $('#myBusLine').blur();
 
-  $('.queryRow').hide();
-  $('.resultRow').show();
+  $('.queryView').hide();
+  $('.resultView').show();
 
   return false;
 });
 
 function getChanges(data) {
-  let returnValues = "";
+  let results = ""
+  let changes = "";
+  let details = "";
+  let tips = "";
 
   if (data.gsx$shakeupinfo.$t == "FALSE") {
-    returnValues += "<p>" + SHAKEUP_CHANGES.no_changes + "</p>";
-    returnValues += "<p>" + "<a href=\"" + data.gsx$scheduleurl.$t + "\">See current schedule and route.</a>" + "</p>";
+    results += "<p>" + SHAKEUP_CHANGES.no_changes + "</p>";
+    results += "<p>" + "<a href=\"" + data.gsx$scheduleurl.$t + "\">See current schedule and route.</a>" + "</p>";
   } else {
-    returnValues += "<p>" + SHAKEUP_CHANGES.changes + "</p><hr>";
+    changes += "<div id=\"keyChanges\">";
+    changes += "<p>" + SHAKEUP_CHANGES.changes + "</p><hr>";
+    changes += "<ul>";
 
     if (data.gsx$lineremoved.$t == "TRUE") {
-      returnValues += "<p>" + SHAKEUP_CHANGES.line_removed + "</p>";
+      changes += "<li>" + SHAKEUP_CHANGES.line_removed + "</li></ul></div>";
+
+      if (data.gsx$alternatives.$t != '') {
+        details = "<div id=\"details\">" +
+                  "<p>Details:</p>" +
+                  data.gsx$alternatives.$t + 
+                  "</div>";
+        tips = "<div id=\"tips\">" +
+                  "<p>Tips:</p><ul>" +
+                  "<li>" + TAP + "</li>" +
+                  "<li>" + TRANSIT_APP + "</li></ul>";
+      }
     } else {
+      
       if (data.gsx$moretrips.$t == "TRUE") {
-        returnValues += "<p>" + SHAKEUP_CHANGES.more_trips + "</p>";
+        changes += "<li>" + SHAKEUP_CHANGES.more_trips + "</li>";
       }
 
       if (data.gsx$morefrequency.$t == "TRUE") {
-        returnValues += "<p>" + SHAKEUP_CHANGES.more_frequency + "</p>";
+        changes += "<li>" + SHAKEUP_CHANGES.more_frequency + "</li>";
       }
 
       if (data.gsx$linemerged.$t == "TRUE") {
-        returnValues += "<p>" + SHAKEUP_CHANGES.line_merged + data.gsx$alternatives.$t + "</p>";
+        changes += "<li>" + SHAKEUP_CHANGES.line_merged + "</li>";
       }
   
       if (data.gsx$segmentsrerouted.$t == "TRUE") {
-        returnValues += "<p>" + SHAKEUP_CHANGES.segments_rerouted + "</p>";
+        changes += "<li>" + SHAKEUP_CHANGES.segments_rerouted + "</li>";
       }
   
       if (data.gsx$startorendpointchanges.$t == "TRUE") {
-        returnValues += "<p>" + SHAKEUP_CHANGES.start_or_end_changes + "</p>";
+        changes += "<li>" + SHAKEUP_CHANGES.start_or_end_changes + "</li>";
       }
   
       if (data.gsx$latenightservicechanges.$t == "TRUE") {
-        returnValues += "<p>" + SHAKEUP_CHANGES.late_night_changes + "</p>";
+        changes += "<li>" + SHAKEUP_CHANGES.late_night_changes + "</li>";
+      }
+      changes += "</ul></div>";
+
+      if (data.gsx$alternatives.$t != '') {
+        details = "<div id=\"details\">" +
+                  "<p>Details:</p>" +
+                  data.gsx$alternatives.$t + 
+                  "</div>";
       }
 
-      returnValues += "<p>Details:</p>";
-      returnValues += "<p>" + PDF_SCHEDULES + "</p>";
-
-      let tips = document.createElement('div');
-      tips.append()
-
-      returnValues += "<p>Tips:</p>";
-      returnValues += "<p>" + TAP + "</p>";
-      returnValues += "<p>" + TRANSIT_APP + "</p>";
+      tips = "<div id=\"tips\">" +
+              "<p>Tips:</p><ul>" +
+              "<li>" + TAP + "</li>" +
+              "<li>" + TRANSIT_APP + "</li></ul>";
     }
   }
-  return returnValues;
+
+  results += changes + details + tips;
+
+  return results;
 }
