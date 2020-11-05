@@ -1,18 +1,28 @@
 const SHAKEUP_DATA_URL = "https://spreadsheets.google.com/feeds/list/15oORluAXFWZBD1thTLHIZADg2fBNhJ2LrcLCDXftcpM/od6/public/values?alt=json";
 const SHAKEUP_CHANGES = {
-  no_changes: "Your bus line has no changes at this time. Please check back as we approach June 2021 for updates.",
-  changes: "Your line has changes:",
-  more_trips: "More Trips",
-  more_frequency: "More Frequency",
-  line_merged: "This Metro Rapid Line is merging with ",
-  line_removed: "Line Removed",
-  line_rerouted: "Line Rerouted",
-  stops_changed: "Stops Changed",
-  owl_changed: "Owl Service Changed"
+  no_changes: "No changes at this time. Check back in June 2021 for service updates.",
+  changes: "Key changes:",
+  more_trips: "More trips",
+  more_frequency: "Frequency increased",
+  line_merged: "Line merged",
+  line_removed: "Line removed",
+  segments_rerouted: "Segment(s) rerouted",
+  start_or_end_changes: "Start or end point changes",
+  late_night_changes: "Late night service changes",
+  line_is_back: "Line is back"
 };
 
 const TRANSIT_APP = "Download the <a href=\"#\">Transit App</a> on your smartphone to help plan your trips!";
 const PDF_SCHEDULES = "See more details in the <a href=\"#\">schedule PDF</a>.";
+
+$('#searchAgain').hide();
+
+$('#searchAgain').click(function() {
+  $('#busQuery').show();
+  $('#searchAgain').hide();
+  $('#busChanges').text('');
+  $('#myBusLine').val('');
+});
 
 /**
  * Handle language switching.
@@ -65,10 +75,12 @@ $('#myBusLine').change(function (e) {
   });
   
   if (busFound != null) {
-    myChanges = "<h2>Line " + myBusLine + " - " + busFound.gsx$linedescription.$t + "</h2>";
-    myChanges += "<li>" + TRANSIT_APP + "</li>";
+    myChanges = "<h2>Bus Line " + myBusLine + "<br>" + busFound.gsx$linedescription.$t + "</h2>";
     
     myChanges += "<div>" + getChanges(busFound) + "</div>"
+
+    $('#busQuery').hide();
+    $('#searchAgain').show();
 
     $('#busChanges').html(
       myChanges
@@ -93,37 +105,39 @@ $('#myBusLine').change(function (e) {
 function getChanges(data) {
   let returnValues = "";
 
-  if (data.gsx$shakeupinfo.$t == "no") {
-    returnValues += "<li>" + SHAKEUP_CHANGES.no_changes + "</li>";
+  if (data.gsx$shakeupinfo.$t == "FALSE") {
+    returnValues += "<p>" + SHAKEUP_CHANGES.no_changes + "</p>";
+    returnValues += "<p>" + "<a href=\"" + data.gsx$scheduleurl.$t + "\">See current schedule and route.</a>" + "</p>";
   } else {
-    returnValues += "<li>" + PDF_SCHEDULES + "</li>";
-    returnValues += "<li>" + SHAKEUP_CHANGES.changes + "</li>";
+    returnValues += "<p>" + PDF_SCHEDULES + "</p>";
+    returnValues += "<p>" + TRANSIT_APP + "</p>";
+    returnValues += "<p>" + SHAKEUP_CHANGES.changes + "</p>";
 
-    if (data.gsx$lineremoved.$t == "yes") {
-      returnValues += "<li>" + SHAKEUP_CHANGES.line_removed + "</li>";
+    if (data.gsx$lineremoved.$t == "TRUE") {
+      returnValues += "<p>" + SHAKEUP_CHANGES.line_removed + "</p>";
     } else {
-      if (data.gsx$moretrips.$t == "yes") {
-        returnValues += "<li>" + SHAKEUP_CHANGES.more_trips + "</li>";
+      if (data.gsx$moretrips.$t == "TRUE") {
+        returnValues += "<p>" + SHAKEUP_CHANGES.more_trips + "</p>";
       }
 
-      if (data.gsx$morefrequency.$t == "yes") {
-        returnValues += "<li>" + SHAKEUP_CHANGES.more_frequency + "</li>";
+      if (data.gsx$morefrequency.$t == "TRUE") {
+        returnValues += "<p>" + SHAKEUP_CHANGES.more_frequency + "</p>";
       }
 
-      if (data.gsx$linemerged.$t == "yes") {
-        returnValues += "<li>" + SHAKEUP_CHANGES.line_merged + data.gsx$alternatives.$t + "</li>";
+      if (data.gsx$linemerged.$t == "TRUE") {
+        returnValues += "<p>" + SHAKEUP_CHANGES.line_merged + data.gsx$alternatives.$t + "</p>";
       }
   
-      if (data.gsx$linererouted.$t == "yes") {
-        returnValues += "<li>" + SHAKEUP_CHANGES.line_rerouted + "</li>";
+      if (data.gsx$segmentsrerouted.$t == "TRUE") {
+        returnValues += "<p>" + SHAKEUP_CHANGES.segments_rerouted + "</p>";
       }
   
-      if (data.gsx$stopschanged.$t == "yes") {
-        returnValues += "<li>" + SHAKEUP_CHANGES.stops_changed + "</li>";
+      if (data.gsx$startorendpointchanges.$t == "TRUE") {
+        returnValues += "<p>" + SHAKEUP_CHANGES.start_or_end_changes + "</p>";
       }
   
-      if (data.gsx$owlchanged.$t == "yes") {
-        returnValues += "<li>" + SHAKEUP_CHANGES.owl_changed + "</li>";
+      if (data.gsx$latenightservicechanges.$t == "TRUE") {
+        returnValues += "<p>" + SHAKEUP_CHANGES.late_night_changes + "</p>";
       }
     }
   }
