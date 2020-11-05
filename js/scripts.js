@@ -16,6 +16,7 @@ const TRANSIT_APP = "Download the <a href=\"#\">Transit App</a> on your smartpho
 const PDF_SCHEDULES = "See more details in the <a href=\"#\">schedule PDF</a>.";
 
 $('#searchAgain').hide();
+$('.bi-caret-up-fill').hide();
 
 $('#searchAgain').click(function() {
   $('#busQuery').show();
@@ -28,6 +29,14 @@ $('#searchAgain').click(function() {
  * Handle language switching.
  */
 
+$('#switchLanguage').click(function() {
+  $(this).toggleClass('blue');
+  $('.bi-caret-down-fill').toggle();
+  $('.bi-caret-up-fill').toggle();
+});
+
+
+/*
 $('[lang="es"]').hide();
 
 $('#switchLanguage').click(function() {
@@ -44,7 +53,7 @@ $('#switchLanguage').click(function() {
   $('[lang="es"]').toggle();
   $('[lang="en"]').toggle();
 });
-
+*/
 
 let shakeupData = {};
 let AJAX = [];
