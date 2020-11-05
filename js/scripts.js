@@ -1,7 +1,7 @@
 const SHAKEUP_DATA_URL = "https://spreadsheets.google.com/feeds/list/15oORluAXFWZBD1thTLHIZADg2fBNhJ2LrcLCDXftcpM/od6/public/values?alt=json";
 const SHAKEUP_CHANGES = {
   no_changes: "No changes at this time. Check back in June 2021 for service updates.",
-  changes: "Key changes:",
+  changes: "Key change(s):",
   more_trips: "More trips",
   more_frequency: "Frequency increased",
   line_merged: "Line merged",
@@ -14,13 +14,13 @@ const SHAKEUP_CHANGES = {
 
 const TRANSIT_APP = "Download the <a href=\"#\">Transit App</a> on your smartphone to help plan your trips!";
 const PDF_SCHEDULES = "See more details in the <a href=\"#\">schedule PDF</a>.";
-
-$('#searchAgain').hide();
-$('.bi-caret-up-fill').hide();
+const TAP = "Load fare at <a href=\"#\">taptogo.net</a> or download the <a href=\"#\">TAP App<\a>";
 
 $('#searchAgain').click(function() {
-  $('#busQuery').show();
-  $('#searchAgain').hide();
+  $('.queryRow').each(function() {
+    $(this).show();
+  });
+  $('.resultRow').hide();
   $('#busChanges').text('');
   $('#myBusLine').val('');
 });
@@ -84,12 +84,12 @@ $('#myBusLine').change(function (e) {
   });
   
   if (busFound != null) {
-    myChanges = "<h2>Bus Line " + myBusLine + "<br>" + busFound.gsx$linedescription.$t + "</h2>";
+    myChanges = "<h1>Bus Line " + myBusLine + "</h1>";
+    myChanges += "<p class=\"lineDescription\">" + busFound.gsx$linedescription.$t + "</p>";
     
-    myChanges += "<div>" + getChanges(busFound) + "</div>"
+    myChanges += "<div class=\"keyChanges\">" + getChanges(busFound) + "</div>"
 
-    $('#busQuery').hide();
-    $('#searchAgain').show();
+
 
     $('#busChanges').html(
       myChanges
@@ -98,7 +98,7 @@ $('#myBusLine').change(function (e) {
     if (myBusLine.trim() == "") {
       myChanges = "";
     } else {
-      myChanges = "<h2>We couldn't find that line, please try again!</h2>";
+      myChanges = "<h1>We couldn't find that line, please try again!</h1>";
     }
     
     $('#busChanges').html(
@@ -107,6 +107,9 @@ $('#myBusLine').change(function (e) {
   }
 
   $('#myBusLine').blur();
+
+  $('.queryRow').hide();
+  $('.resultRow').show();
 
   return false;
 });
@@ -118,9 +121,7 @@ function getChanges(data) {
     returnValues += "<p>" + SHAKEUP_CHANGES.no_changes + "</p>";
     returnValues += "<p>" + "<a href=\"" + data.gsx$scheduleurl.$t + "\">See current schedule and route.</a>" + "</p>";
   } else {
-    returnValues += "<p>" + PDF_SCHEDULES + "</p>";
-    returnValues += "<p>" + TRANSIT_APP + "</p>";
-    returnValues += "<p>" + SHAKEUP_CHANGES.changes + "</p>";
+    returnValues += "<p>" + SHAKEUP_CHANGES.changes + "</p><hr>";
 
     if (data.gsx$lineremoved.$t == "TRUE") {
       returnValues += "<p>" + SHAKEUP_CHANGES.line_removed + "</p>";
@@ -148,6 +149,16 @@ function getChanges(data) {
       if (data.gsx$latenightservicechanges.$t == "TRUE") {
         returnValues += "<p>" + SHAKEUP_CHANGES.late_night_changes + "</p>";
       }
+
+      returnValues += "<p>Details:</p>";
+      returnValues += "<p>" + PDF_SCHEDULES + "</p>";
+
+      let tips = document.createElement('div');
+      tips.append()
+
+      returnValues += "<p>Tips:</p>";
+      returnValues += "<p>" + TAP + "</p>";
+      returnValues += "<p>" + TRANSIT_APP + "</p>";
     }
   }
   return returnValues;

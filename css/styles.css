@@ -25,3 +25,23 @@
     border-top: solid 1px #bbb;
     color: #333;
 }
+
+.resultRow {
+    display: none;
+}
+
+.bi-caret-up-fill {
+    display: none;
+}
+
+.lineDescription {
+    font-weight: bold;
+}
+
+.keyChanges {
+    margin-top: 2em;
+}
+
+#busQuery {
+    margin-top: 2em;
+}
