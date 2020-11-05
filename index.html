@@ -14,36 +14,31 @@
     </head>
 
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-1"><button id="switchLanguage" class="btn btn-primary">español</button><input type="hidden" value="en" id="currentLanguage"></div>
+                <div class="col"><button id="switchLanguage" class="btn btn-primary">español</button><input type="hidden" value="en" id="currentLanguage"></div>
             </div>
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-sm" >
+                <div class="col" >
                     <h1><span lang="en">Is My Bus Line Changing?</span><span lang="es">¿Está cambiando mi autobús?</span> <span class="badge badge-info badge-secondary">beta</span></h1>
                 </div>
-                <div class="col-md-2"></div>
             </div>
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-sm-4">
-                    <form id="busQuery" style="text-align: center;" onSubmit="return false;">
+                <div class="col-3">
+                    <form id="busQuery" onSubmit="return false;">
                         <div class="form-group">
                             <label for="myBusLine"><span lang="en">Which bus line do you ride?</span><span lang="es">¿Cuál autobús su viaja?</span></label>
-                            <input type="text" class="form-control form-control-lg" id="myBusLine" placeholder="select your line" list="busLines">
+                            <input type="text" class="form-control" id="myBusLine" placeholder="select your line" list="busLines">
                             <datalist id="busLines"></datalist>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-4"></div>
             </div>
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8" >
-                    <ul id="busChanges"></ul>
+                <div class="col" >
+                    <div id="busChanges"></div>
+                    <div id="searchAgain"><button class="btn btn-primary">Check another Bus Line</button></div>
                 </div>
-                <div class="col-md-2"></div>
             </div>
         </div>
         

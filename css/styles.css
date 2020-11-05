@@ -1,17 +1,3 @@
-* {
-    text-align: center;
+html {
     font-family: 'Open Sans', sans-serif;
 }
-
-ul#busChanges {
-    margin: 0;
-    padding: 0;
-}
-#busChanges li {
-    list-style: none;
-    display: inline-block;
-    width: 100%;
-    margin: 20px;
-    font-size: larger;
-}
-
