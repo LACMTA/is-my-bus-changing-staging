@@ -1,20 +1,21 @@
 const SHAKEUP_DATA_URL = "https://spreadsheets.google.com/feeds/list/15oORluAXFWZBD1thTLHIZADg2fBNhJ2LrcLCDXftcpM/od6/public/values?alt=json";
 const SHAKEUP_CHANGES = {
   no_changes: "No changes at this time. Check back in June 2021 for service updates.",
-  changes: "Key change(s):",
   more_trips: "More trips",
   more_frequency: "Frequency increased",
   line_merged: "Line merged",
-  line_removed: "Line removed",
+  line_removed: "Line discontinued",
   segments_rerouted: "Segment(s) rerouted",
   start_or_end_changes: "Start or end point changes",
   late_night_changes: "Late night service changes",
   line_is_back: "Line is back"
 };
 
-const TRANSIT_APP = "Download the <a href=\"#\">Transit App</a> on your smartphone to help plan your trips!";
-const PDF_SCHEDULES = "See more details in the <a href=\"#\">schedule PDF</a>.";
-const TAP = "Load fare at <a href=\"#\">taptogo.net</a> or download the <a href=\"#\">TAP App<\a>";
+const PDF_SCHEDULES = "See updated ### schedule and route";
+const TIPS = {
+  transit_app: "Download the <a href=\"#\">Transit App</a> on your smartphone to help plan your trips!",
+  tap: "Load fare at <a href=\"https://taptogo.net\">taptogo.net</a> or download the <a href=\"#\">TAP App<\a>"
+};
 
 $('#searchAgainButton').click(function() {
   $('.queryView').each(function() {
@@ -97,31 +98,23 @@ $('#myBusLine').change(function (e) {
     }
   });
   
-  if (busFound != null) {
-    myChanges = "<h1>Bus Line " + myBusLine + "</h1>";
-    myChanges += "<p id=\"lineDescription\">" + busFound.gsx$linedescription.$t + "</p>";
-    
+  if (busFound != null) { /* Bus line exists in data */
+    myChanges = `<h1>Bus Line ${myBusLine}</h1>`;
+    myChanges += `<h2>${busFound.gsx$linedescription.$t}</h2>`;
     myChanges += getChanges(busFound);
-
-
-
-    $('#busChanges').html(
-      myChanges
-    );
   } else {
-    if (myBusLine.trim() == "") {
+    if (myBusLine.trim() == "") { /* No bus line entered */
       myChanges = "";
-    } else {
+    } else { /* Bus line doesn't exist in data*/
       myChanges = "<h1>We couldn't find that line, please try again!</h1>";
     }
-    
-    $('#busChanges').html(
-      myChanges
-    );
   }
 
-  $('#myBusLine').blur();
+  $('#busChanges').html(
+    myChanges
+  );
 
+  $('#myBusLine').blur();
   $('.queryView').hide();
   $('.resultView').show();
 
@@ -134,66 +127,50 @@ function getChanges(data) {
   let details = "";
   let tips = "";
 
-  if (data.gsx$shakeupinfo.$t == "FALSE") {
-    results += "<p>" + SHAKEUP_CHANGES.no_changes + "</p>";
-    results += "<p>" + "<a href=\"" + data.gsx$scheduleurl.$t + "\">See current schedule and route.</a>" + "</p>";
-  } else {
-    changes += "<div id=\"keyChanges\">";
-    changes += "<p>" + SHAKEUP_CHANGES.changes + "</p><hr>";
-    changes += "<ul>";
+  if (data.gsx$shakeupinfo.$t == "FALSE") { /* No changes this shakeup */
+    results += `<p>${SHAKEUP_CHANGES.no_changes}</p>`;
+    results += `<p><a href="${data.gsx$scheduleurl.$t}">See current schedule and route.</a></p>`;
 
-    if (data.gsx$lineremoved.$t == "TRUE") {
-      changes += "<li>" + SHAKEUP_CHANGES.line_removed + "</li></ul></div>";
+  } else { /* Yes changes this shakeup */
+    changes += `<div id="keyChanges"><h3>Key change(s):</h3><hr><ul>`;
 
-      if (data.gsx$details.$t != '') {
-        details = "<div id=\"details\">" +
-                  "<p>Details:</p>" +
-                  data.gsx$details.$t + 
-                  "</div>";
-        tips = "<div id=\"tips\">" +
-                  "<p>Tips:</p><ul>" +
-                  "<li>" + TAP + "</li>" +
-                  "<li>" + TRANSIT_APP + "</li></ul>";
-      }
-    } else {
+    if (data.gsx$lineremoved.$t == "TRUE") { /* Line discontinued */
+      changes += `<li>${SHAKEUP_CHANGES.line_removed}</li></ul></div>`;
+
+    } else { /* Line still exists */
       
-      if (data.gsx$moretrips.$t == "TRUE") {
-        changes += "<li>" + SHAKEUP_CHANGES.more_trips + "</li>";
+      if (data.gsx$moretrips.$t == "TRUE") { /* More trips */
+        changes += `<li>${SHAKEUP_CHANGES.more_trips}</li>`;
       }
 
-      if (data.gsx$morefrequency.$t == "TRUE") {
-        changes += "<li>" + SHAKEUP_CHANGES.more_frequency + "</li>";
+      if (data.gsx$morefrequency.$t == "TRUE") { /* More frequency */
+        changes += `<li>${SHAKEUP_CHANGES.more_frequency}</li>`;
       }
 
-      if (data.gsx$linemerged.$t == "TRUE") {
-        changes += "<li>" + SHAKEUP_CHANGES.line_merged + "</li>";
+      if (data.gsx$linemerged.$t == "TRUE") { /* Line merged */
+        changes += `<li>${SHAKEUP_CHANGES.line_merged}</li>`;
       }
   
-      if (data.gsx$segmentsrerouted.$t == "TRUE") {
-        changes += "<li>" + SHAKEUP_CHANGES.segments_rerouted + "</li>";
+      if (data.gsx$segmentsrerouted.$t == "TRUE") { /* Segments rerouted */
+        changes += `<li>${SHAKEUP_CHANGES.segments_rerouted}</li>`;
       }
   
-      if (data.gsx$startorendpointchanges.$t == "TRUE") {
-        changes += "<li>" + SHAKEUP_CHANGES.start_or_end_changes + "</li>";
+      if (data.gsx$startorendpointchanges.$t == "TRUE") { /* Start or End point changes */
+        changes += `<li>${SHAKEUP_CHANGES.start_or_end_changes}</li>`;
       }
   
-      if (data.gsx$latenightservicechanges.$t == "TRUE") {
-        changes += "<li>" + SHAKEUP_CHANGES.late_night_changes + "</li>";
-      }
-      changes += "</ul></div>";
-
-      if (data.gsx$details.$t != '') {
-        details = "<div id=\"details\">" +
-                  "<p>Details:</p>" +
-                  data.gsx$details.$t + 
-                  "</div>";
+      if (data.gsx$latenightservicechanges.$t == "TRUE") { /* Late night service changes */
+        changes += `<li>${SHAKEUP_CHANGES.late_night_changes}</li>`;
       }
 
-      tips = "<div id=\"tips\">" +
-              "<p>Tips:</p><ul>" +
-              "<li>" + TAP + "</li>" +
-              "<li>" + TRANSIT_APP + "</li></ul>";
+      changes += `</ul><p>See <a href="${data.gsx$scheduleurl.$t}">updated ${data.gsx$linenumber.$t} schedule and route.</a></p></div>`;
     }
+
+    if (data.gsx$details.$t != '') { /* Show details if they exist */
+      details = `<div id="details"><h3>Details:</h3>${data.gsx$details.$t}</div>`;
+    }
+
+    tips = `<div id="tips"><h3>Tips:</h3><ul><li>${TIPS.tap}</li><li>${TIPS.transit_app}</li></ul>`; /* Show Tips */
   }
 
   results += changes + details + tips;

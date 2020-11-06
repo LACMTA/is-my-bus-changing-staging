@@ -28,9 +28,20 @@ a:link.black {
     color: #000;
 }
 
+h1, h2, h3 {
+    font-weight: 600;
+}
+
 h1 {
     font-size: 1.8em;
-    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.2em;
+}
+
+h3 {
+    font-size: 1em;
 }
 
 /* Language Selection */
@@ -76,11 +87,6 @@ h1 {
 
 /* Styles */
 
-#keyChanges p, #details p, #tips p {
-    margin-top: 2em;
-    font-weight: bold;
-}
-
 #keyChanges li {
     font-size: 1.6em;
     font-weight: 600;
@@ -91,11 +97,6 @@ h1 {
 }
 #searchAgainButton {
     font-weight: bold;
-}
-
-#lineDescription {
-    font-weight: 600;
-    font-size: 1.2em;
 }
 
 .changeDescription {
