@@ -29,11 +29,24 @@ $('#searchAgainButton').click(function() {
  * Handle language switching.
  */
 
-$('#switchLanguage').click(function() {
-  $(this).toggleClass('blue');
-  $(this).toggleClass('black');
-  $('.bi-caret-down-fill').toggle();
-  $('.bi-caret-up-fill').toggle();
+$('#switchLanguage img').hover(function() {
+  if (!$(this).hasClass('showLanguages')) {
+    $(this).attr('src', 'img/language_icon_active.png');
+  }
+}, function() {
+  if (!$(this).hasClass('showLanguages')) {
+    $(this).attr('src', 'img/language_icon.png');
+  }
+});
+
+$('#switchLanguage img').click(function() {
+  $(this).toggleClass('showLanguages');
+
+  if ($(this).hasClass('showLanguages')) {
+    $(this).attr('src', 'img/language_icon_active.png');
+  } else {
+    $(this).attr('src', 'img/language_icon.png');
+  }
 });
 
 
@@ -132,10 +145,10 @@ function getChanges(data) {
     if (data.gsx$lineremoved.$t == "TRUE") {
       changes += "<li>" + SHAKEUP_CHANGES.line_removed + "</li></ul></div>";
 
-      if (data.gsx$alternatives.$t != '') {
+      if (data.gsx$details.$t != '') {
         details = "<div id=\"details\">" +
                   "<p>Details:</p>" +
-                  data.gsx$alternatives.$t + 
+                  data.gsx$details.$t + 
                   "</div>";
         tips = "<div id=\"tips\">" +
                   "<p>Tips:</p><ul>" +
@@ -169,10 +182,10 @@ function getChanges(data) {
       }
       changes += "</ul></div>";
 
-      if (data.gsx$alternatives.$t != '') {
+      if (data.gsx$details.$t != '') {
         details = "<div id=\"details\">" +
                   "<p>Details:</p>" +
-                  data.gsx$alternatives.$t + 
+                  data.gsx$details.$t + 
                   "</div>";
       }
 
