@@ -106,6 +106,11 @@ $('#myBusLine').on('autocompleteselect', function (e, ui) {
   let busFound = null;
   e.preventDefault();
 
+  /* Hide language selector if a bus line is chosen */
+  if ($('#switchLanguage img').hasClass('showLanguages')) {
+    $('#switchLanguage img').click();
+  }
+
   $(shakeupData).each(function (index, element) {
     if (element.gsx$linenumber.$t == myBusLine) {
       busFound = element;
