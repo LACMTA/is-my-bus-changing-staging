@@ -32,7 +32,7 @@ h1, h2, h3 {
     font-weight: 600;
 }
 
-h1 {
+h1#myHeader {
     font-size: 1.8em;
 }
 
@@ -55,7 +55,6 @@ h3 {
 }
 
 #collapseLanguages {
-    margin-top: 5px;
     border-bottom: solid 1px #bbb;
 }
 
@@ -67,24 +66,6 @@ h3 {
     color: #000;
 }
 
-/* Page Layout */
-
-.resultView {
-    display: none;
-}
-
-.bi-caret-up-fill {
-    display: none;
-}
-
-#keyChanges {
-    margin-top: 2em;
-}
-
-#busQuery {
-    margin-top: 2em;
-}
-
 /* Styles */
 
 #keyChanges li {
@@ -92,9 +73,6 @@ h3 {
     font-weight: 600;
 }
 
-#searchAgain {
-    margin-top: 2em;
-}
 #searchAgainButton {
     font-weight: bold;
 }

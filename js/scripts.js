@@ -3,7 +3,6 @@ const SHAKEUP_CHANGES = {
   no_changes: "No changes at this time. Check back in June 2021 for service updates.",
   more_trips: "More trips",
   more_frequency: "Frequency increased",
-  line_merged: "Line merged",
   line_removed: "Line discontinued",
   segments_rerouted: "Segment(s) rerouted",
   start_or_end_changes: "Start or end point changes",
@@ -16,6 +15,8 @@ const TIPS = {
   transit_app: "Download the <a href=\"#\">Transit App</a> on your smartphone to help plan your trips!",
   tap: "Load fare at <a href=\"https://taptogo.net\">taptogo.net</a> or download the <a href=\"#\">TAP App<\a>"
 };
+
+$('.resultView').hide();
 
 $('#searchAgainButton').click(function() {
   $('.queryView').each(function() {
@@ -127,12 +128,12 @@ function getChanges(data) {
   let details = "";
   let tips = "";
 
-  if (data.gsx$shakeupinfo.$t == "FALSE") { /* No changes this shakeup */
+  if (data.gsx$changes.$t == "FALSE") { /* No changes this shakeup */
     results += `<p>${SHAKEUP_CHANGES.no_changes}</p>`;
     results += `<p><a href="${data.gsx$scheduleurl.$t}">See current schedule and route.</a></p>`;
 
   } else { /* Yes changes this shakeup */
-    changes += `<div id="keyChanges"><h3>Key change(s):</h3><hr><ul>`;
+    changes += `<div id="keyChanges" class="mt-3"><h3>Key change(s):</h3><hr><ul>`;
 
     if (data.gsx$lineremoved.$t == "TRUE") { /* Line discontinued */
       changes += `<li>${SHAKEUP_CHANGES.line_removed}</li></ul></div>`;
@@ -147,10 +148,6 @@ function getChanges(data) {
         changes += `<li>${SHAKEUP_CHANGES.more_frequency}</li>`;
       }
 
-      if (data.gsx$linemerged.$t == "TRUE") { /* Line merged */
-        changes += `<li>${SHAKEUP_CHANGES.line_merged}</li>`;
-      }
-  
       if (data.gsx$segmentsrerouted.$t == "TRUE") { /* Segments rerouted */
         changes += `<li>${SHAKEUP_CHANGES.segments_rerouted}</li>`;
       }
@@ -163,14 +160,18 @@ function getChanges(data) {
         changes += `<li>${SHAKEUP_CHANGES.late_night_changes}</li>`;
       }
 
+      if (data.gsx$lineisback.$t == "TRUE") { /* Line is back */
+        changes += `<li>${SHAKEUP_CHANGES.line_is_back}</li>`;
+      }
+  
       changes += `</ul><p>See <a href="${data.gsx$scheduleurl.$t}">updated ${data.gsx$linenumber.$t} schedule and route.</a></p></div>`;
     }
 
     if (data.gsx$details.$t != '') { /* Show details if they exist */
-      details = `<div id="details"><h3>Details:</h3>${data.gsx$details.$t}</div>`;
+      details = `<div id="details" class="mt-3"><h3>Details:</h3>${data.gsx$details.$t}</div>`;
     }
 
-    tips = `<div id="tips"><h3>Tips:</h3><ul><li>${TIPS.tap}</li><li>${TIPS.transit_app}</li></ul>`; /* Show Tips */
+    tips = `<div id="tips" class="mt-3"><h3>Tips:</h3><ul><li>${TIPS.tap}</li><li>${TIPS.transit_app}</li></ul>`; /* Show Tips */
   }
 
   results += changes + details + tips;

@@ -14,12 +14,13 @@
     </head>
 
     <body>
-        <div class="container-fluid">
-            <div class="row queryView">
-                <div class="col" >
-                    <h1><span lang="en">Is my bus line changing?</span><!--<span lang="es">¿Está cambiando mi autobús?</span>--> <span class="badge badge-info badge-secondary">beta</span></h1>
+        <div class="container">
+            <div class="row queryView mt-3">
+                <div class="col" ></div>
+                <div class="col-md-8" >
+                    <h1><span lang="en">Is my bus line changing?</span><!--<span lang="es">¿Está cambiando mi autobús?</span>--></h1>
                     <p>
-                        <a id="switchLanguage" class="languageIcon black" role="button" data-toggle="collapse" href="#collapseLanguages" aria-expanded="false" aria-controls="collapseLanguages"><img src="img/language_icon.png" alt="select language"></a>
+                        <a id="switchLanguage" class="languageIcon black mt-1" role="button" data-toggle="collapse" href="#collapseLanguages" aria-expanded="false" aria-controls="collapseLanguages"><img src="img/language_icon.png" alt="select language"></a>
                     </p>
                     <div id="collapseLanguages" class="collapse">                        
                         <a class="languageSelection" id="changes-hy" href="#">armenian</a>
@@ -33,10 +34,12 @@
                     </div>
                     <!--<button id="switchLanguage" class="btn btn-primary">español</button><input type="hidden" value="en" id="currentLanguage">-->
                 </div>
+                <div class="col" ></div>
             </div>
             
-            <div class="row queryView">
-                <div class="col-3">
+            <div class="row queryView mt-3">
+                <div class="col" ></div>
+                <div class="col-md-8">
                     <form id="busQuery" onSubmit="return false;">
                         <div class="form-group">
                             <label for="myBusLine"><span lang="en">Which bus line do you ride?</span><!--<span lang="es">¿Cuál autobús su viaja?</span>--></label>
@@ -45,15 +48,18 @@
                         </div>
                     </form>
                 </div>
+                <div class="col" ></div>
             </div>
 
-            <div class="row resultView">
-                <div class="col" >
+            <div class="row resultView mt-3">
+                <div class="col" ></div>
+                <div class="col-md-8" >
                     <div id="busChanges"></div>
-                    <div id="searchAgain">
+                    <div id="searchAgain" class="mt-3">
                         <a href="#" id="searchAgainButton" role="button">Check another Bus Line</a>
                     </div>
                 </div>
+                <div class="col" ></div>
             </div>
         </div>
         
