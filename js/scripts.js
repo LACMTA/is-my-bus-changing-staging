@@ -73,6 +73,7 @@ $('#switchLanguage').click(function() {
 
 let shakeupData = {};
 let AJAX = [];
+let currentLines = [];
 
 function getData(url) {
   return $.getJSON(url);
@@ -80,15 +81,27 @@ function getData(url) {
 
 AJAX.push(getData(SHAKEUP_DATA_URL))
 
-$.when.apply($, AJAX).done(function() {
-  shakeupData = arguments[0].feed.entry;
-  $.each(shakeupData, function () {
-    $('#busLines').append('<option>' + this.gsx$linenumber.$t + '</option>');
+$(function() {
+  $.when.apply($, AJAX).done(function() {
+    shakeupData = arguments[0].feed.entry;
+
+    $.each(shakeupData, function () {
+      currentLines.push(this.gsx$linenumber.$t);
+    });
+
+    $('#myBusLine').autocomplete({
+      source: currentLines,
+      autoFocus: true,
+      minLength: 0
+    }).focus(function() {
+      $('#myBusLine').autocomplete('search');
+    });
   });
 });
 
-$('#myBusLine').change(function (e) {
-  let myBusLine = $('#myBusLine').val();
+
+$('#myBusLine').on('autocompleteselect', function (e, ui) {
+  let myBusLine = ui.item.value;
   let myChanges = "";
   let busFound = null;
   e.preventDefault();
