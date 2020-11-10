@@ -13,7 +13,10 @@ body {
 
 a:link, a:hover, a:visited {
     color: #077FC4;
-    text-decoration: none;
+}
+
+a.btn {
+    color: white;
 }
 
 a:link.black {
@@ -55,7 +58,7 @@ h3 {
 }
 
 #collapseLanguages {
-    border-bottom: solid 1px #bbb;
+    border-bottom: solid 3px #bbb;
 }
 
 .languageSelection {
@@ -68,18 +71,23 @@ h3 {
 
 /* Styles */
 
-#keyChanges li {
-    font-size: 1.6em;
+#changeList {
+    border: solid 1px #077FC4;
+    padding: 1em;
+    font-size: 1.2em;
     font-weight: 600;
+}
+
+#changeList ul {
+    margin-bottom: 0;
 }
 
 #searchAgainButton {
     font-weight: bold;
 }
 
-.changeDescription {
-    font-size: 1.6em;
-    font-weight: 600;
+#busDetailsAlternatives a, #busTips a {
+    text-decoration: underline;
 }
 
 /* jQuery UI Autocomplete */
