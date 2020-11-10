@@ -13,13 +13,13 @@ const SHAKEUP_CHANGES = {
 
 const PDF_SCHEDULES = "See updated ### schedule and route";
 const TIPS = {
-  transit_app: `Download the <a href="#">Transit App</a> on your smartphone to help plan your trips!`,
+  transit_app: `Download the <a href="https://transitapp.com/download?utm_source=lametro-ca-website&utm_medium=referral&utm_campaign=partners">Transit App</a> on your smartphone to help plan your trips!`,
   tap: `Load fare at <a href="https://taptogo.net">taptogo.net</a> or download the <a href="#">TAP App</a>.`
 };
 
 $('.resultView').hide();
 $('#getSchedule').hide();
-
+$('#myBusLine').hide();
 
 function resetPage() {
   $('.queryView').each(function() {
@@ -113,6 +113,7 @@ $(function() {
     }).focus(function() {
       $('#myBusLine').autocomplete('search');
     });
+    $('#myBusLine').show();
   });
 });
 
