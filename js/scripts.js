@@ -19,7 +19,6 @@ const TIPS = {
 
 $('.resultView').hide();
 $('#getSchedule').hide();
-$('#myBusLine').hide();
 
 function resetPage() {
   $('.queryView').each(function() {
@@ -114,7 +113,7 @@ $(function() {
     }).focus(function() {
       $('#myBusLine').autocomplete('search');
     });
-    $('#myBusLine').show();
+    $('html').removeClass('js');
   });
 });
 
