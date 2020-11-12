@@ -1,6 +1,8 @@
 const SHAKEUP_DATA_URL = "https://spreadsheets.google.com/feeds/list/15oORluAXFWZBD1thTLHIZADg2fBNhJ2LrcLCDXftcpM/od6/public/values?alt=json";
-const SHAKEUP_CHANGES = {
+const MESSAGES = {
+  yes_changes: "Yes! Key change(s) effective December 13, 2020:",
   no_changes: "No changes at this time. Check back in June 2021.",
+  line_not_found: "We couldn't find that line, please try again!",
   more_trips: "More trips",
   more_frequency: "Frequency increased",  
   segments_rerouted: "Segment(s) rerouted",
@@ -151,48 +153,48 @@ function showHeading(data) {
     $('#busLine').html(`<h1>Bus Line ${data.gsx$linenumber.$t}</h1><h2>${data.gsx$linedescription.$t}</h2>`);
     return true;
   } else {
-    $('#busNoResults').html("<h1>We couldn't find that line, please try again!</h1>");
+    $('#busNoResults').html(`<h1>${MESSAGES.line_not_found}</h1>`);
     return false;
   }
 }
 
 function showChanges(data) {
   if (hasChanges(data, true)) { /* has changes - show "Key Change(s)" heading + list of changes*/
-    $('#busChanges').append('<h3>Yes! Key change(s):</h3>');
+    $('#busChanges').append(`<h3>${MESSAGES.yes_changes}</h3>`);
     $('#busChanges').append('<div id="changeList"></div>')
     $('#changeList').append('<ul class="list-unstyled"></ul>');
 
     if (data.gsx$linediscontinued.$t == "TRUE") { /* Line discontinued */
-      $('#changeList ul').append(`<li class="my-4">${SHAKEUP_CHANGES.discontinued}</li>`);
+      $('#changeList ul').append(`<li class="my-4">${MESSAGES.discontinued}</li>`);
     } else {
       if (data.gsx$moretrips.$t == "TRUE") { /* More trips */
-        $('#changeList ul').append(`<li class="my-4">${SHAKEUP_CHANGES.more_trips}</li>`);
+        $('#changeList ul').append(`<li class="my-4">${MESSAGES.more_trips}</li>`);
       }
 
       if (data.gsx$morefrequency.$t == "TRUE") { /* More frequency */
-        $('#changeList ul').append(`<li class="my-4">${SHAKEUP_CHANGES.more_frequency}</li>`);
+        $('#changeList ul').append(`<li class="my-4">${MESSAGES.more_frequency}</li>`);
       }
 
       if (data.gsx$segmentsrerouted.$t == "TRUE") { /* Segments rerouted */
-        $('#changeList ul').append(`<li class="my-4">${SHAKEUP_CHANGES.segments_rerouted}</li>`);
+        $('#changeList ul').append(`<li class="my-4">${MESSAGES.segments_rerouted}</li>`);
       }
 
       if (data.gsx$startorendpointchanges.$t == "TRUE") { /* Start or End point changes */
-        $('#changeList ul').append(`<li class="my-4">${SHAKEUP_CHANGES.start_or_end_changes}</li>`);
+        $('#changeList ul').append(`<li class="my-4">${MESSAGES.start_or_end_changes}</li>`);
       }
 
       if (data.gsx$latenightservicechanges.$t == "TRUE") { /* Late night service changes */
-        $('#changeList ul').append(`<li class="my-4">${SHAKEUP_CHANGES.late_night_changes}</li>`);
+        $('#changeList ul').append(`<li class="my-4">${MESSAGES.late_night_changes}</li>`);
       }
 
       if (data.gsx$lineisback.$t == "TRUE") { /* Line is back */
-        $('#changeList ul').append(`<li class="my-4">${SHAKEUP_CHANGES.is_back}</li>`);
+        $('#changeList ul').append(`<li class="my-4">${MESSAGES.is_back}</li>`);
       }
     }
     
   } else { /* no changes, show no heading + show no changes message */
     $('#busChanges').append('<div id="changeList"></div>')
-    $('#changeList').append(`<ul class="list-unstyled"><li class="my-4">${SHAKEUP_CHANGES.no_changes}</li></ul>`);
+    $('#changeList').append(`<ul class="list-unstyled"><li class="my-4">${MESSAGES.no_changes}</li></ul>`);
   }
   return;
 }
