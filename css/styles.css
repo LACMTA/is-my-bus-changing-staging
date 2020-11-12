@@ -94,16 +94,6 @@ h3 {
     text-decoration: underline;
 }
 
-.navbar-brand img {
-    width: 34px;
-    height: 34px;
-}
-
-.navbar-brand span {
-    font-size: 30px;
-    font-weight: 600;
-}
-
 /* jQuery UI Autocomplete */
 ul.ui-autocomplete {
     max-height: 500px;

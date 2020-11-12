@@ -113,6 +113,18 @@ $(function() {
     }).focus(function() {
       $('#myBusLine').autocomplete('search');
     });
+
+    /* Show results based on bus line in URL params
+    let params = new URLSearchParams(window.location.search);
+    let paramValue = '';
+    if (params.has('busLine')) {
+      paramValue = params.get('busLine');
+
+      $('#myBusLine').val(paramValue);
+      $('#myBusLine').trigger('autocompleteselect');
+    }
+    */
+
     $('html').removeClass('js');
   });
 });
@@ -180,7 +192,7 @@ function showChanges(data) {
     
   } else { /* no changes, show no heading + show no changes message */
     $('#busChanges').append('<div id="changeList"></div>')
-    $('#changeList').append(SHAKEUP_CHANGES.no_changes);
+    $('#changeList').append(`<ul class="list-unstyled"><li class="my-4">${SHAKEUP_CHANGES.no_changes}</li></ul>`);
   }
   return;
 }
