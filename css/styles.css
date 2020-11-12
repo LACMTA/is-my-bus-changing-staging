@@ -94,6 +94,10 @@ h3 {
     text-decoration: underline;
 }
 
+#busTips .appLogo {
+    height: 2em;
+}
+
 /* jQuery UI Autocomplete */
 ul.ui-autocomplete {
     max-height: 500px;

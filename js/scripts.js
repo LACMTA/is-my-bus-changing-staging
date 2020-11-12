@@ -36,7 +36,7 @@ function resetPage() {
   $('#busChanges').text('');
   $('#busDetailsAlternatives').text('');
   $('#busWhy').text('');
-  $('#busTips').text('');
+//  $('#busTips').text('');
   $('#busNoResults').text('');  
 }
 
@@ -229,11 +229,11 @@ function showSchedule(data) {
     $('#getSchedule').text('Current Schedule & Route').attr('href', data.gsx$scheduleurl.$t).show();
   }
 }
-
+/*
 function showTips(data) {
-  /* Always show tips */
   $('#busTips').append(`<h3>Tips:</h3><ul><li>${TIPS.tap}</li><li>${TIPS.transit_app}</li></ul>`);
 }
+*/
 
 $('#myBusLine').on('autocompleteselect', function (e, ui) {
   let myBusLine = ui.item.value;
@@ -262,7 +262,7 @@ $('#myBusLine').on('autocompleteselect', function (e, ui) {
       showDetailsAlternatives(busData);
       showWhy(busData);
       showSchedule(busData);
-      showTips(busData);
+      //showTips(busData);
     }
   }
 
