@@ -35,7 +35,7 @@ a:link.black {
     color: #000;
 }
 
-h1, h2, h3 {
+h1, h3 {
     font-weight: 600;
 }
 
@@ -79,7 +79,6 @@ h3 {
     border: solid 1px #077FC4;
     padding: 0 1.5em;
     font-size: 1.2em;
-    font-weight: 600;
 }
 
 #changeList ul {
