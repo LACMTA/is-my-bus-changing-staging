@@ -23,6 +23,7 @@ function resetPage() {
     $(this).show();
   });
 
+  $('title').text('Is my bus line changing?');
   $('#myBusLine').val('');
 
   $('.resultView').hide();
@@ -36,7 +37,9 @@ function resetPage() {
   $('#busNoResults').text('');  
 }
 
-$('#searchAgainButton').click(function() {
+$('#searchAgainButton').click(function(e) {
+  e.preventDefault();
+  window.history.pushState({}, '', './');
   resetPage();
 });
 
@@ -238,6 +241,10 @@ $('#myBusLine').on('autocompleteselect', function (e, ui) {
     /* Something was entered into the field */
     if (showLine(busData)) {
       /* A valid bus line was entered into the field */
+      busLinePath = busData.gsx$linenumber.$t.replace('/', '-')
+      window.history.pushState({}, '',  `${window.location}?line=${busLinePath}`);
+      gtag('config', 'UA-10002990-14');
+
       showChanges(busData);
       showDetailsAlternatives(busData);
       showWhy(busData);
