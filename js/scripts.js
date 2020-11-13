@@ -28,7 +28,8 @@ function resetPage() {
   $('.resultView').hide();
   $('#getSchedule').hide();
 
-  $('#busLine').text('');
+  $('#busLine h1').text('');
+  $('#busLine h2').text('');
   $('#busChanges').text('');
   $('#busDetailsAlternatives').text('');
   $('#busWhy').text('');
