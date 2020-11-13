@@ -86,7 +86,7 @@ h3 {
     font-weight: bold;
 }
 
-#busDetailsAlternatives a, #busTips a {
+#busDetailsAlternatives a, #busTips a, #searchAgain, #busSchedule p a {
     text-decoration: underline;
 }
 
