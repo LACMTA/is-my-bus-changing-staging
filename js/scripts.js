@@ -241,10 +241,17 @@ $('#myBusLine').on('autocompleteselect', function (e, ui) {
     /* Something was entered into the field */
     if (showLine(busData)) {
       /* A valid bus line was entered into the field */
-      busLinePath = busData.gsx$linenumber.$t.replace('/', '-')
-      $.when.apply($, [window.history.pushState({}, '',  `${window.location}?line=${busLinePath}`)]).done(function() {
-        gtag('config', 'UA-10002990-14');
-      });      
+      const regex1 = /(\/|\(|\)|\s)/g;
+      const regex2 = /--/g;
+      const regex3 = /-$/;
+
+      busLinePath = busData.gsx$linenumber.$t.replace(regex1, '-').replace(regex2, '-').replace(regex3, '');
+      window.history.pushState({}, '',  `${window.location}?line=${busLinePath}`);
+      
+      gtag('config', 'UA-10002990-14', {
+        'page_title': busData.gsx$linenumber.$t,
+        'page_path': `?line=${busLinePath}`
+      });
 
       showChanges(busData);
       showDetailsAlternatives(busData);
