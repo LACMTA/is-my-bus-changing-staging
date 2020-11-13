@@ -8,4 +8,5 @@ This tool will be under continuous development to better communicate service cha
 
 [Try out the tool and give us your thoughts!](https://mybus.metro.net)
 
-- Love the Metro team
+Love,
+the Metro team
