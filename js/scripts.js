@@ -10,7 +10,8 @@ const MESSAGES = {
   late_night_changes: "Late night (owl) service changes",
   is_back: "Line is back in service",
   discontinued: "Line discontinued",
-  remains_suspended: "Service remains suspended"
+  remains_suspended: "Service remains suspended",
+  line_number_changed: "Line number changed"
 };
 
 const PDF_SCHEDULES = "See updated ### schedule and route";
@@ -109,7 +110,8 @@ function hasChanges(data, countDiscontinued) {
       data.gsx$segmentsrerouted.$t == "TRUE" ||
       data.gsx$startorendpointchanges.$t == "TRUE" ||
       data.gsx$latenightservicechanges.$t == "TRUE" ||
-      data.gsx$lineisback.$t == "TRUE"){
+      data.gsx$lineisback.$t == "TRUE" ||
+      data.gsx$linenumberchanged.$t == "TRUE"){
     return true;
   }
 
@@ -175,6 +177,10 @@ function showChanges(data) {
 
       if (data.gsx$lineisback.$t == "TRUE") { /* Line is back */
         $('#changeList ul').append(`<li class="my-4">${MESSAGES.is_back}</li>`);
+      }
+
+      if (data.gsx$linenumberchanged.$t == "TRUE") { /* Line is back */
+        $('#changeList ul').append(`<li class="my-4">${MESSAGES.line_number_changed}</li>`);
       }
     }
     
