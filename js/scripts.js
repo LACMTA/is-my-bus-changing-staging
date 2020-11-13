@@ -41,6 +41,10 @@ $('#searchAgainButton').click(function(e) {
   e.preventDefault();
   window.history.pushState({}, '', './');
   resetPage();
+  gtag('config', 'UA-10002990-14', {
+    'page_title': 'Is my bus line changing?',
+    'page_path': ''
+  });
 });
 
 /**
