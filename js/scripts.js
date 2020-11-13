@@ -32,7 +32,6 @@ function resetPage() {
   $('#busChanges').text('');
   $('#busDetailsAlternatives').text('');
   $('#busWhy').text('');
-//  $('#busTips').text('');
   $('#busNoResults').text('');  
 }
 
@@ -64,26 +63,6 @@ $('#switchLanguage img').click(function() {
   }
 });
 
-
-/*
-$('[lang="es"]').hide();
-
-$('#switchLanguage').click(function() {
-  if ($('#currentLanguage').val() == 'en') {
-    $('#currentLanguage').val('es');
-    $('#myBusLine').attr('placeholder', 'selecciona su autobús');
-    $('#switchLanguage').text('english');
-  } else {
-    $('#currentLanguage').val('en');
-    $('#myBusLine').attr('placeholder', 'select your line');
-    $('#switchLanguage').text('español');
-  }
-  
-  $('[lang="es"]').toggle();
-  $('[lang="en"]').toggle();
-});
-*/
-
 let shakeupData = {};
 let AJAX = [];
 let currentLines = [];
@@ -111,17 +90,6 @@ $(function() {
     }).focus(function() {
       $('#myBusLine').autocomplete('search');
     });
-
-    /* Show results based on bus line in URL params
-    let params = new URLSearchParams(window.location.search);
-    let paramValue = '';
-    if (params.has('busLine')) {
-      paramValue = params.get('busLine');
-
-      $('#myBusLine').val(paramValue);
-      $('#myBusLine').trigger('autocompleteselect');
-    }
-    */
 
     $('html').removeClass('js');
   });
@@ -157,7 +125,8 @@ function showLine(data) {
 
     }
     $('title').text(`Details for ${lineText}`);
-    $('#busLine').html(`<h1>${lineText}</h1><h2>${data.gsx$linedescription.$t}</h2>`);
+    $('#busLine h1').text(lineText);
+    $('#busLine h2').text(data.gsx$linedescription.$t);
 
     return true;
   } else {
@@ -244,11 +213,6 @@ function showSchedule(data) {
     }).show();
   }
 }
-/*
-function showTips(data) {
-  $('#busTips').append(`<h3>Tips:</h3><ul><li>${TIPS.tap}</li><li>${TIPS.transit_app}</li></ul>`);
-}
-*/
 
 $('#myBusLine').on('autocompleteselect', function (e, ui) {
   let myBusLine = ui.item.value;
@@ -277,7 +241,6 @@ $('#myBusLine').on('autocompleteselect', function (e, ui) {
       showDetailsAlternatives(busData);
       showWhy(busData);
       showSchedule(busData);
-      //showTips(busData);
     }
   }
 
