@@ -14,8 +14,6 @@ const MESSAGES = {
   line_number_changed: "Line number changed"
 };
 
-const PDF_SCHEDULES = "See updated ### schedule and route";
-
 $('.resultView').hide();
 $('#getSchedule').hide();
 
