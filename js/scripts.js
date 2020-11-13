@@ -1,6 +1,6 @@
 const SHAKEUP_DATA_URL = "https://spreadsheets.google.com/feeds/list/15oORluAXFWZBD1thTLHIZADg2fBNhJ2LrcLCDXftcpM/od6/public/values?alt=json";
 const MESSAGES = {
-  yes_changes: "Yes! Key change(s) effective December 13, 2020:",
+  yes_changes: "Key change(s) effective December 13, 2020:",
   no_changes: "No changes at this time. Check back in June 2021.",
   line_not_found: "We couldn't find that line, please try again!",
   more_trips: "More trips",
@@ -14,10 +14,6 @@ const MESSAGES = {
 };
 
 const PDF_SCHEDULES = "See updated ### schedule and route";
-const TIPS = {
-  transit_app: `Download the <a href="https://transitapp.com/download?utm_source=lametro-ca-website&utm_medium=referral&utm_campaign=partners">Transit App</a> on your smartphone to help plan your trips!`,
-  tap: `Load fare at <a href="https://taptogo.net">taptogo.net</a> or download the <a href="#">TAP App</a>.`
-};
 
 $('.resultView').hide();
 $('#getSchedule').hide();
