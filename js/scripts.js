@@ -1,6 +1,6 @@
 const SHAKEUP_DATA_URL = "https://spreadsheets.google.com/feeds/list/15oORluAXFWZBD1thTLHIZADg2fBNhJ2LrcLCDXftcpM/od6/public/values?alt=json";
 const MESSAGES = {
-  yes_changes: "Key change(s) effective December 13, 2020:",
+  yes_changes: "Key change(s):",
   no_changes: "No changes at this time. Check back in June 2021.",
   line_not_found: "We couldn't find that line, please try again!",
   more_trips: "More trips",
@@ -147,7 +147,7 @@ function showLine(data) {
 function showChanges(data) {
   if (hasChanges(data, true)) { /* has changes - show "Key Change(s)" heading + list of changes*/
     $('#busChanges').append(`<h3>${MESSAGES.yes_changes}</h3>`);
-    $('#busChanges').append('<div id="changeList"></div>')
+    $('#busChanges').append('<div id="changeList" class="rounded"></div>')
     $('#changeList').append('<ul class="list-unstyled"></ul>');
 
     if (data.gsx$linediscontinued.$t == "TRUE") { /* Line discontinued */

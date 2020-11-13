@@ -27,10 +27,6 @@ a:link.black {
     color: #000;
 }
 
-.blue {
-    color: #077FC4;
-}
-
 .black {
     color: #000;
 }
@@ -76,7 +72,8 @@ h3 {
 /* Styles */
 
 #changeList {
-    border: solid 1px #077FC4;
+    border: solid 2px #467596;
+    background-color: white;
     padding: 0 1.5em;
     font-size: 1.2em;
 }
@@ -93,8 +90,23 @@ h3 {
     text-decoration: underline;
 }
 
+#busTips {
+    background-color: #ebedec;
+    padding: 1.5em;
+}
+
 #busTips .appLogo {
-    height: 2em;
+    height: 2.5em;
+}
+
+.resultView.jumbotron {
+    background-color: #e2f4fd;
+    margin-top: 0;
+    padding: 0;
+}
+
+#busSchedule p {
+    font-size: smaller;
 }
 
 /* jQuery UI Autocomplete */
