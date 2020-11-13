@@ -242,8 +242,9 @@ $('#myBusLine').on('autocompleteselect', function (e, ui) {
     if (showLine(busData)) {
       /* A valid bus line was entered into the field */
       busLinePath = busData.gsx$linenumber.$t.replace('/', '-')
-      window.history.pushState({}, '',  `${window.location}?line=${busLinePath}`);
-      gtag('config', 'UA-10002990-14');
+      $.when.apply($, [window.history.pushState({}, '',  `${window.location}?line=${busLinePath}`)]).done(function() {
+        gtag('config', 'UA-10002990-14');
+      });      
 
       showChanges(busData);
       showDetailsAlternatives(busData);
