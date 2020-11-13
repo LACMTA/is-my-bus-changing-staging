@@ -144,11 +144,24 @@ function hasChanges(data, countDiscontinued) {
   return false;
 }
 
-function showHeading(data) {
-  if (data != null)  {
-    $('#busLine').html(`<h1>Bus Line ${data.gsx$linenumber.$t}</h1><h2>${data.gsx$linedescription.$t}</h2>`);
+function showLine(data) {
+  let lineNumber = data.gsx$linenumber.$t;
+  let lineText = '';
+  const regex = /^[0-9]/;
+
+  if (data != null) {
+    if (lineNumber[0].match(regex)) {
+      lineText = "Bus Line " + lineNumber;
+    } else {
+      lineText = lineNumber;
+
+    }
+    $('title').text(`Details for ${lineText}`);
+    $('#busLine').html(`<h1>${lineText}</h1><h2>${data.gsx$linedescription.$t}</h2>`);
+
     return true;
   } else {
+    $('title').text(`Line Not Found`);
     $('#busNoResults').html(`<h1>${MESSAGES.line_not_found}</h1>`);
     return false;
   }
@@ -252,7 +265,7 @@ $('#myBusLine').on('autocompleteselect', function (e, ui) {
     });
 
     /* Something was entered into the field */
-    if (showHeading(busData)) {
+    if (showLine(busData)) {
       /* A valid bus line was entered into the field */
       showChanges(busData);
       showDetailsAlternatives(busData);
