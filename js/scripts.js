@@ -233,9 +233,15 @@ function showSchedule(data) {
   if (data.gsx$linediscontinued.$t == "TRUE" || data.gsx$remainssuspended.$t == "TRUE") { 
     return;
   } else if (hasChanges(data, false)) { /* if changes, show "New" schedule */
-    $('#getSchedule').text('New Schedule & Route').attr('href', data.gsx$scheduleurl.$t).show();
+    $('#getSchedule').text('New Schedule & Route').attr({
+      'href': data.gsx$scheduleurl.$t,
+      'data-schedule-version': 'new'
+    }).show();
   } else {    /* if no changes, show "Current" schedule */
-    $('#getSchedule').text('Current Schedule & Route').attr('href', data.gsx$scheduleurl.$t).show();
+    $('#getSchedule').text('Current Schedule & Route').attr({
+      'href': data.gsx$scheduleurl.$t,
+      'data-schedule-version': 'current'
+    }).show();
   }
 }
 /*
