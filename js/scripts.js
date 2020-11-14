@@ -211,19 +211,26 @@ function showWhy(data) {
 
 function showSchedule(data) {
   /* Line discontinued or remains suspended */
-  if (data.gsx$linediscontinued.$t == "TRUE" || data.gsx$remainssuspended.$t == "TRUE") { 
+  if (data.gsx$linediscontinued.$t == "TRUE" || data.gsx$remainssuspended.$t == "TRUE") {
     return;
   } else if (hasChanges(data, false)) { /* if changes, show "New" schedule */
-    $('#getSchedule').text('New Schedule & Route').attr({
-      'href': data.gsx$scheduleurl.$t,
-      'data-schedule-version': 'new'
-    }).show();
+    if ($(data.gsx$scheduleurl.$t == '')) {
+      $('#getSchedule').text('Schedule Coming Soon').removeClass('btn-primary').addClass('btn-secondary').addClass('disabled').attr('aria-disabled', true).show();
+    } else {
+      $('#getSchedule').text('New Schedule & Route').attr({
+        'href': data.gsx$scheduleurl.$t,
+        'aria-disabled': false,
+        'data-schedule-version': 'new'
+      }).removeClass('disabled').removeClass('btn-secondary').addClass('btn-primary').show();
+    }
   } else {    /* if no changes, show "Current" schedule */
     $('#getSchedule').text('Current Schedule & Route').attr({
       'href': data.gsx$scheduleurl.$t,
+      'aria-disabled': false,
       'data-schedule-version': 'current'
-    }).show();
+    }).removeClass('disabled').removeClass('btn-secondary').addClass('btn-primary').show();
   }
+
 }
 
 $('#myBusLine').on('autocompleteselect', function (e, ui) {
