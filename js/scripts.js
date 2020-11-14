@@ -1,7 +1,7 @@
 const SHAKEUP_DATA_URL = "https://spreadsheets.google.com/feeds/list/15oORluAXFWZBD1thTLHIZADg2fBNhJ2LrcLCDXftcpM/od6/public/values?alt=json";
 const MESSAGES = {
   yes_changes: "Key change(s):",
-  no_changes: "No changes at this time. Check back in June 2021.",
+  no_changes: "No changes at this time. New bus update coming June 2021. Check back then.",
   line_not_found: "We couldn't find that line, please try again!",
   more_trips: "More trips",
   more_frequency: "Frequency increased",  
