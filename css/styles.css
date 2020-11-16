@@ -71,6 +71,10 @@ h3 {
 
 /* Styles */
 
+label[for="myBusLine"] {
+    font-weight: 600;
+}
+
 #changeList {
     border: solid 2px #467596;
     background-color: white;
