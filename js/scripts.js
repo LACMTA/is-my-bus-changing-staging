@@ -214,7 +214,7 @@ function showSchedule(data) {
   if (data.gsx$linediscontinued.$t == "TRUE" || data.gsx$remainssuspended.$t == "TRUE") {
     return;
   } else if (hasChanges(data, false)) { /* if changes, show "New" schedule */
-    if ($(data.gsx$scheduleurl.$t == '')) {
+    if (data.gsx$scheduleurl.$t == '') {
       $('#getSchedule').text('Schedule Coming Soon').removeClass('btn-primary').addClass('btn-secondary').addClass('disabled').attr('aria-disabled', true).show();
     } else {
       $('#getSchedule').text('New Schedule & Route').attr({
