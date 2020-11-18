@@ -45,6 +45,11 @@
         <link rel="stylesheet" href="css/jquery-ui.css">
         <link rel="stylesheet" href="css/styles.css">
 
+        <script type="text/javascript">
+            if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent))
+                document.write('<script src="js/url-search-params-polyfill.js"><\/script>');
+        </script>
+
         <!-- Facebook Pixel Code -->
         <script>
             !function(f,b,e,v,n,t,s)
