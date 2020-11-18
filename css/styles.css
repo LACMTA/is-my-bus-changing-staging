@@ -115,3 +115,10 @@ ul.ui-autocomplete {
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
+/* Add spacing to bottom of screen for mobile devices. FB in-app browser has a bug when the Send to Messenger bar is visible and you scroll to the bottom of the page */
+@media (max-width: 768px) {
+    body {
+        margin-bottom: 200px;
+    }
+}
