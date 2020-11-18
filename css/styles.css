@@ -1,8 +1,4 @@
 /* General Styles */
-.js {
-    display: none;
-}
-
 * {
     font-family: 'Open Sans', sans-serif;
 }
@@ -103,7 +99,7 @@ label[for="myBusLine"] {
     height: 2.5em;
 }
 
-.resultView.jumbotron {
+.jumbotron {
     background-color: #e2f4fd;
     margin-top: 0;
     padding: 0;
