@@ -13,112 +13,37 @@ const MESSAGES = {
   remains_suspended: "Service remains suspended",
   line_number_changed: "Line number changed"
 };
-
-$('.resultView').hide();
-$('#getSchedule').hide();
-
-function resetPage() {
-  $('.queryView').each(function() {
-    $(this).show();
-  });
-
-  $('title').text('Is my bus line changing?');
-  $('#myBusLine').val('');
-
-  $('.resultView').hide();
-  $('#getSchedule').hide();
-
-  $('#busLine h1').text('');
-  $('#busLine h2').text('');
-  $('#busChanges').text('');
-  $('#busDetailsAlternatives').text('');
-  $('#busWhy').text('');
-  $('#busNoResults').text('');  
-}
-
-$('#searchAgainButton').click(function(e) {
-  e.preventDefault();
-  window.history.pushState({}, '', './');
-  resetPage();
-  gtag('config', 'UA-10002990-14', {
-    'page_title': 'Is my bus line changing?',
-    'page_path': ''
-  });
-});
-
-/**
- * Handle language switching.
- */
-
-$('#switchLanguage img').hover(function() {
-  if (!$(this).hasClass('showLanguages')) {
-    $(this).attr('src', 'img/language_icon_active.png');
-  }
-}, function() {
-  if (!$(this).hasClass('showLanguages')) {
-    $(this).attr('src', 'img/language_icon.png');
-  }
-});
-
-$('#switchLanguage img').click(function() {
-  $(this).toggleClass('showLanguages');
-
-  if ($(this).hasClass('showLanguages')) {
-    $(this).attr('src', 'img/language_icon_active.png');
-  } else {
-    $(this).attr('src', 'img/language_icon.png');
-  }
-});
-
 let shakeupData = {};
 let AJAX = [];
-let currentLines = [];
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
 
 function getData(url) {
   return $.getJSON(url);
 }
 
-AJAX.push(getData(SHAKEUP_DATA_URL))
+AJAX.push(getData(SHAKEUP_DATA_URL));
 
 $(function() {
-  resetPage();
-
   $.when.apply($, AJAX).done(function() {
     shakeupData = arguments[0].feed.entry;
 
     $.each(shakeupData, function () {
-      currentLines.push(this.gsx$linenumber.$t);
-    });
+      if (this.gsx$linenumber.$t == urlParams.get('line')) {
+        if (showLine(this)) {
+          showChanges(this);
+          showDetailsAlternatives(this);
+          showWhy(this);
+          showSchedule(this);
+        }
 
-    $('#myBusLine').autocomplete({
-      source: currentLines,
-      autoFocus: true,
-      minLength: 0
-    }).focus(function() {
-      $('#myBusLine').autocomplete('search');
+        return false;
+      }
     });
-
-    $('html').removeClass('js');
   });
+
+
 });
-
-function hasChanges(data, countDiscontinued) {
-  if (data.gsx$moretrips.$t == "TRUE" ||
-      data.gsx$morefrequency.$t == "TRUE" ||
-      data.gsx$segmentsrerouted.$t == "TRUE" ||
-      data.gsx$startorendpointchanges.$t == "TRUE" ||
-      data.gsx$latenightservicechanges.$t == "TRUE" ||
-      data.gsx$lineisback.$t == "TRUE" ||
-      data.gsx$linenumberchanged.$t == "TRUE"){
-    return true;
-  }
-
-  if (countDiscontinued && data.gsx$linediscontinued.$t == "TRUE") {
-    return true;
-  }
-
-  return false;
-}
 
 function showLine(data) {
   let lineNumber = data.gsx$linenumber.$t;
@@ -142,6 +67,24 @@ function showLine(data) {
     $('#busNoResults').html(`<h1>${MESSAGES.line_not_found}</h1>`);
     return false;
   }
+}
+
+function hasChanges(data, countDiscontinued) {
+  if (data.gsx$moretrips.$t == "TRUE" ||
+      data.gsx$morefrequency.$t == "TRUE" ||
+      data.gsx$segmentsrerouted.$t == "TRUE" ||
+      data.gsx$startorendpointchanges.$t == "TRUE" ||
+      data.gsx$latenightservicechanges.$t == "TRUE" ||
+      data.gsx$lineisback.$t == "TRUE" ||
+      data.gsx$linenumberchanged.$t == "TRUE"){
+    return true;
+  }
+
+  if (countDiscontinued && data.gsx$linediscontinued.$t == "TRUE") {
+    return true;
+  }
+
+  return false;
 }
 
 function showChanges(data) {
@@ -221,63 +164,15 @@ function showSchedule(data) {
         'href': data.gsx$scheduleurl.$t,
         'aria-disabled': false,
         'data-schedule-version': 'new'
-      }).removeClass('disabled').removeClass('btn-secondary').addClass('btn-primary').show();
+      }).removeClass('disabled').removeClass('btn-secondary').addClass('btn-primary');
     }
   } else {    /* if no changes, show "Current" schedule */
     $('#getSchedule').text('Current Schedule & Route').attr({
       'href': data.gsx$scheduleurl.$t,
       'aria-disabled': false,
       'data-schedule-version': 'current'
-    }).removeClass('disabled').removeClass('btn-secondary').addClass('btn-primary').show();
+    }).removeClass('disabled').removeClass('btn-secondary').addClass('btn-primary');
   }
 
 }
 
-$('#myBusLine').on('autocompleteselect', function (e, ui) {
-  let myBusLine = ui.item.value;
-  let busData = null;
-  e.preventDefault();
-
-  /* Hide language selector if a bus line is chosen */
-  if ($('#switchLanguage img').hasClass('showLanguages')) {
-    $('#switchLanguage img').click();
-  }
-
-  /* Check if something was entered */
-  if (myBusLine.trim() != "") { 
-
-    /* Try to find the bus line from the data */
-    $(shakeupData).each(function (index, element) { 
-      if (element.gsx$linenumber.$t == myBusLine) {
-        busData = element;
-      }
-    });
-
-    /* Something was entered into the field */
-    if (showLine(busData)) {
-      /* A valid bus line was entered into the field */
-      const regex1 = /(\/|\(|\)|\s)/g;
-      const regex2 = /--/g;
-      const regex3 = /-$/;
-
-      busLinePath = busData.gsx$linenumber.$t.replace(regex1, '-').replace(regex2, '-').replace(regex3, '');
-      window.history.pushState({}, '',  `${window.location}?line=${busLinePath}`);
-      
-      gtag('config', 'UA-10002990-14', {
-        'page_title': busData.gsx$linenumber.$t,
-        'page_path': `?line=${busLinePath}`
-      });
-
-      showChanges(busData);
-      showDetailsAlternatives(busData);
-      showWhy(busData);
-      showSchedule(busData);
-    }
-  }
-
-  $('#myBusLine').blur();
-  $('.queryView').hide();
-  $('.resultView').show();
-
-  return false;
-});
