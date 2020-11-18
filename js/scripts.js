@@ -57,14 +57,14 @@ function showLine(data) {
       lineText = lineNumber;
 
     }
-    $('title').text(`Details for ${lineText}`);
+    $('title').text('Details for' + lineText);
     $('#busLine h1').text(lineText);
     $('#busLine h2').text(data.gsx$linedescription.$t);
 
     return true;
   } else {
-    $('title').text(`Line Not Found`);
-    $('#busNoResults').html(`<h1>${MESSAGES.line_not_found}</h1>`);
+    $('title').text('Line Not Found');
+    $('#busNoResults').html('<h1>' + MESSAGES.line_not_found + '</h1>');
     return false;
   }
 }
@@ -89,45 +89,45 @@ function hasChanges(data, countDiscontinued) {
 
 function showChanges(data) {
   if (hasChanges(data, true)) { /* has changes - show "Key Change(s)" heading + list of changes*/
-    $('#busChanges').append(`<h3>${MESSAGES.yes_changes}</h3>`);
+    $('#busChanges').append('<h3>' + MESSAGES.yes_changes + '</h3>');
     $('#busChanges').append('<div id="changeList" class="rounded"></div>')
     $('#changeList').append('<ul class="list-unstyled"></ul>');
 
     if (data.gsx$linediscontinued.$t == "TRUE") { /* Line discontinued */
-      $('#changeList ul').append(`<li class="my-4">${MESSAGES.discontinued}</li>`);
+      $('#changeList ul').append('<li class="my-4">' + MESSAGES.discontinued + '</li>');
     } else {
       if (data.gsx$moretrips.$t == "TRUE") { /* More trips */
-        $('#changeList ul').append(`<li class="my-4">${MESSAGES.more_trips}</li>`);
+        $('#changeList ul').append('<li class="my-4">' + MESSAGES.more_trips + '</li>');
       }
 
       if (data.gsx$morefrequency.$t == "TRUE") { /* More frequency */
-        $('#changeList ul').append(`<li class="my-4">${MESSAGES.more_frequency}</li>`);
+        $('#changeList ul').append('<li class="my-4">' + MESSAGES.more_frequency + '</li>');
       }
 
       if (data.gsx$segmentsrerouted.$t == "TRUE") { /* Segments rerouted */
-        $('#changeList ul').append(`<li class="my-4">${MESSAGES.segments_rerouted}</li>`);
+        $('#changeList ul').append('<li class="my-4">' + MESSAGES.segments_rerouted + '</li>');
       }
 
       if (data.gsx$startorendpointchanges.$t == "TRUE") { /* Start or End point changes */
-        $('#changeList ul').append(`<li class="my-4">${MESSAGES.start_or_end_changes}</li>`);
+        $('#changeList ul').append('<li class="my-4">' + MESSAGES.start_or_end_changes + '</li>');
       }
 
       if (data.gsx$latenightservicechanges.$t == "TRUE") { /* Late night service changes */
-        $('#changeList ul').append(`<li class="my-4">${MESSAGES.late_night_changes}</li>`);
+        $('#changeList ul').append('<li class="my-4">' + MESSAGES.late_night_changes + '</li>');
       }
 
       if (data.gsx$lineisback.$t == "TRUE") { /* Line is back */
-        $('#changeList ul').append(`<li class="my-4">${MESSAGES.is_back}</li>`);
+        $('#changeList ul').append('<li class="my-4">' + MESSAGES.is_back + '</li>');
       }
 
       if (data.gsx$linenumberchanged.$t == "TRUE") { /* Line is back */
-        $('#changeList ul').append(`<li class="my-4">${MESSAGES.line_number_changed}</li>`);
+        $('#changeList ul').append('<li class="my-4">' + MESSAGES.line_number_changed + '</li>');
       }
     }
     
   } else { /* no changes, show no heading + show no changes message */
     $('#busChanges').append('<div id="changeList"></div>')
-    $('#changeList').append(`<ul class="list-unstyled"><li class="my-4">${MESSAGES.no_changes}</li></ul>`);
+    $('#changeList').append('<ul class="list-unstyled"><li class="my-4">' + MESSAGES.no_changes + '</li></ul>');
   }
   return;
 }
