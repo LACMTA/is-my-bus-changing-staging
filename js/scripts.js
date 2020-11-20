@@ -57,7 +57,7 @@ function showLine(data) {
       lineText = lineNumber;
 
     }
-    $('title').text('Details for' + lineText);
+    $('title').text('Details for ' + lineText);
     $('#busLine h1').text(lineText);
     $('#busLine h2').text(data.gsx$linedescription.$t);
 
