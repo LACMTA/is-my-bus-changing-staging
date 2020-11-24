@@ -95,14 +95,14 @@
 
     <div class="jumbotron">
         <div class="container">
-            <div class="row pt-3">
+            <div class="row py-3">
                 <div class="col"></div>
                 <div class="col-lg-6">
-                    <div id="busLine" class="mx-3">
+                    <div id="busLine">
                         <h1 class="mt-3"></h1>
                         <h2></h2>
                     </div>
-                    <div id="busChanges" class="m-3">
+                    <div id="busChanges">
                     </div>
                 </div>
                 <div class="col"></div>
@@ -113,30 +113,33 @@
         <div class="row mt-3">
             <div class="col"></div>
             <div class="col-lg-6">
-                <div id="busSchedule" class="m-3 text-center">
+                <div id="busSchedule" class="my-3 text-center">
                     <a id="getSchedule" class="btn btn-primary" href="#" role="button" target="_blank">Schedule &
                         Route</a>
                     <p class="mt-3"><a href="docs/21-1632_NextGen_Phase1_TK1_jp7-web-rev_ENG ONLY.pdf">Updates effective
                             Sunday, December 13, 2020.</a></p>
                 </div>
-                <div id="busDetailsAlternatives" class="mx-3"></div>
-                <div id="busWhy" class="m-3"></div>
-                <div id="busNoResults" class="m-3"></div>
-                <div id="transit" class="busTips mx-3">
+                <div id="busDetailsAlternatives"></div>
+                <div id="busWhy" class="my-3"></div>
+                <div id="busNoResults" class="my-3"></div>
+                <div id="transit" class="busTips mt-3" style="display: grid; grid-template-columns: 45px 1fr 2em;">
+                    <div><img src="img/transit_logo.png" alt="Transit App logo" class="appLogo"></div>
                     <div>
-                        <img src="img/transit_logo.png" alt="Transit App logo" class="appLogo mr-3 float-left"><svg id="transit-closed" class="float-right" width="2em" height="2em" viewBox="0 0 16 16"
-                        class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-                    </svg>
-                    <svg id="transit-open" class="float-right" width="2em" height="2em" viewBox="0 0 16 16"
-                        class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-                    </svg>Tap here to plan your trip with Transit, the official Metro app.
+                        Tap here to plan your trip with Transit, the official Metro app.
                     </div>
+                    <div>
+                        <svg id="transit-closed" class="float-right" width="2em" height="2em" viewBox="0 0 16 16"
+                            class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        <svg id="transit-open" width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-down"
+                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                        </svg></div>
                 </div>
-                <div class="busTips mx-3" id="transit-details">
+                <div id="transit-details" class="busTips">
                     <div>
                         <p style="font-weight: 600;">Metro’s official app, <a
                                 href="https://transitapp.com/download?utm_source=lametro-ca-website&utm_medium=referral&utm_campaign=partners">Transit</a>,
@@ -154,21 +157,23 @@
                         <p><img src="img/transit-option-view.png" style="width: 100%;"></p>
                         <p>Now, you can see scheduled arrival times and plan your new commute by looking at route maps,
                             finding the nearest stop, and using the trip planner.</p>
-                        <p><span style="font-weight: 600;">To go back to the current bus system</span>, just follow the instructions again, but turn off “Metro
+                        <p><span style="font-weight: 600;">To go back to the current bus system</span>, just follow the
+                            instructions again, but turn off “Metro
                             (starts Dec 13)” and turn “Metro” back on.</p>
 
                     </div>
                 </div>
-                <div class="busTips m-3">
+                <div class="busTips my-3" style="display: grid; grid-template-columns: 45px 1fr;">
                     <div>
                         <a href="https://apps.apple.com/us/app/tap-la/id1505839730"><img src="img/iOS App Icon@1.5x.svg"
-                                alt="TAP logo" class="appLogo mr-3 float-left" style="border-radius: 8px;"></a>Tap and
+                                alt="TAP logo" class="appLogo mr-3 float-left" style="border-radius: 8px;"></a></div>
+                    <div>Tap and
                         pay with the <a href="https://apps.apple.com/us/app/tap-la/id1505839730">TAP App</a> (for iOS).
                         Questions? Visit <a
                             href="https://www.taptogo.net/articles/en_US/Website_content/TAP-App-FAQs#overview">taptogo.net</a>.
                     </div>
                 </div>
-                <div id="searchAgain" class="my-5 mx-3 text-center">
+                <div id="searchAgain" class="my-5 text-center">
                     <a href="index.html" id="searchAgainButton" role="button">Check another bus line</a>
                 </div>
             </div>
