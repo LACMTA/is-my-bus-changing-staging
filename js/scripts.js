@@ -24,7 +24,13 @@ function getData(url) {
 
 AJAX.push(getData(SHAKEUP_DATA_URL));
 
+$('#transit-details, #transit-open').hide();
+$('.busTips#transit').on('click', function() {
+  $('#transit-details, #transit-open, #transit-closed').toggle();
+});
+
 $(function() {
+
   $.when.apply($, AJAX).done(function() {
     shakeupData = arguments[0].feed.entry;
 

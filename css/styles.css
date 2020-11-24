@@ -90,13 +90,25 @@ label[for="myBusLine"] {
     text-decoration: underline;
 }
 
-#busTips {
+#transit-details.busTips {
+    padding-top: 0;
+}
+
+.busTips {
     background-color: #ebedec;
     padding: 1.5em;
 }
 
-#busTips .appLogo {
+.busTips .appLogo {
     height: 2.5em;
+}
+
+.busTips div {
+    min-height: 36px;
+}
+
+#transit-open, #transit-closed {
+    color: #777;
 }
 
 .jumbotron {
