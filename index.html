@@ -137,6 +137,55 @@
                         <input type="text" class="form-control" id="myBusLine" placeholder="select your line">
                     </div>
                 </form>
+
+                <div id="transit" class="busTips mx-4 mt-4">
+                    <div>
+                        <img src="img/transit_logo.png" alt="Transit App logo" class="appLogo mr-3 float-left">Plan your
+                        trip with Transit, the official Metro app.
+                        <svg id="transit-closed" class="float-right" width="2em" height="2em" viewBox="0 0 16 16"
+                            class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        <svg id="transit-open" class="float-right" width="2em" height="2em" viewBox="0 0 16 16"
+                            class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="busTips mx-4" id="transit-details">
+                    <div>
+                        <p style="font-weight: 600;">Metro’s official app, <a
+                                href="https://transitapp.com/download?utm_source=lametro-ca-website&utm_medium=referral&utm_campaign=partners">Transit</a>,
+                            has marked routes in the app that are changing, ending or
+                            receiving additional service.</p>
+                        <p><img src="img/transit-bus-view.png" style="width: 100%;"></p>
+                        <p>The app also has a preview mode to give you a peek at the
+                            service changes. Here’s how to turn it on:</p>
+                        <ol>
+                            <li>Tap “settings” (gear icon, top left corner).</li>
+                            <li>Then tap the middle slider icon at the top of the screen.</li>
+                            <li>Under “Bus,” turn off “Metro” and turn on “Metro (starts Dec 13).” Then tap “Done.” This
+                                will show you what the bus network will look like starting December 13.</li>
+                        </ol>
+                        <p><img src="img/transit-option-view.png" style="width: 100%;"></p>
+                        <p>Now, you can see scheduled arrival times and plan your new commute by looking at route maps,
+                            finding the nearest stop, and using the trip planner.</p>
+                        <p><span style="font-weight: 600;">To go back to the current bus system</span>, just follow the instructions again, but turn off “Metro
+                            (starts Dec 13)” and turn “Metro” back on.</p>
+
+                    </div>
+                </div>
+                <div class="busTips m-4">
+                    <div>
+                        <a href="https://apps.apple.com/us/app/tap-la/id1505839730"><img src="img/iOS App Icon@1.5x.svg"
+                                alt="TAP logo" class="appLogo mr-3 float-left" style="border-radius: 8px;"></a>Tap and
+                        pay with the <a href="https://apps.apple.com/us/app/tap-la/id1505839730">TAP App</a> (for iOS).
+                        Questions? Visit <a
+                            href="https://www.taptogo.net/articles/en_US/Website_content/TAP-App-FAQs#overview">taptogo.net</a>.
+                    </div>
+                </div>
             </div>
             <div class="col"></div>
         </div>
@@ -148,82 +197,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
-
-    <script>
-        /**
-         * Handle language switching.
-         */
-
-        $('#switchLanguage img').hover(function () {
-            if (!$(this).hasClass('showLanguages')) {
-                $(this).attr('src', 'img/language_icon_active.png');
-            }
-        }, function () {
-            if (!$(this).hasClass('showLanguages')) {
-                $(this).attr('src', 'img/language_icon.png');
-            }
-        });
-
-        $('#switchLanguage img').click(function () {
-            $(this).toggleClass('showLanguages');
-
-            if ($(this).hasClass('showLanguages')) {
-                $(this).attr('src', 'img/language_icon_active.png');
-            } else {
-                $(this).attr('src', 'img/language_icon.png');
-            }
-        });
-
-        /**
-         * Manually define list of bus lines (needs to match the Google Sheet's first column)
-         */
-
-        const currentLines = ['2', '4', '10', '14/37', '16', '18', '20', '28', '30', '33', '35/38', '40', '45', '48', '51/52', '53', '55', '60', '62', '66', '68', '70', '71', '76', '78/79', '81', '83', '90/91', '92', '94', '96', '102', '105', '106', '108', '110', '111', '115', '117', '120', '125', '126', '127', '128', '130', '150/240', '152', '154', '155', '158', '161', '162/163', '164', '165', '166', '167', '169', '175', '176', '177', '180/181', '183', '200', '201', '202', '204', '205', '206', '207', '209', '210', '211/215', '212', '217', '218', '222', '224', '230', '232', '233', '234', '236', '237/656', '239', '242/243', '244/245', '246', '251', '252', '254', '256', '258', '260', '265', '266', '264/267', '268', '302', '312', '316', '330', '344', '351', '353', '355', '358', '364', '378', '442', '460', '487/489', '501', '534', '550', '577', '601', '602', '603', '605', '607', '611', '612', '625', '665', '685', '686/687', '704', '705', '710', '720', '728', '733', '734', '740', '744', '745', '750', '751', '754', '757', '760', '762', '770', '780', '794', '901 - G Line (Orange)', '910/950 - J Line (Silver)', '834 - L Line (Gold) Shuttle'];
-
-        function isValidBusLine() {
-            let inputEntry = $('#myBusLine').val();
-            let index = currentLines.indexOf(inputEntry);
-            if (index > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        $('#myBusLine').autocomplete({
-            source: currentLines,
-            autoFocus: true,
-            minLength: 0
-        }).focus(function () {
-            $('#myBusLine').autocomplete('search');
-        });
-
-        // Handle Enter key being pressed (even when no item in list is selected)
-        $('#myBusLine').keydown(function(e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-                if (isValidBusLine()) {
-                    window.location = 'bus.html?line=' + $('#myBusLine').val();
-                }
-            }
-        });
-
-        // Attempt to handle iOS keyboard "Done" button
-        $('#myBusLine').focusout(function(e) {
-            if (isValidBusLine()) {
-                window.location = 'bus.html?line=' + $('#myBusLine').val();
-            }
-        });
-
-        // Handles selection from dropdown list
-        $('#myBusLine').on('autocompleteselect', function (e, ui) {
-            $('#myBusLine').val(ui.item.value);
-
-            if (isValidBusLine()) {
-                window.location = 'bus.html?line=' + ui.item.value;
-            }
-        });
-    </script>
+    <script src="js/script.js"></script>
+    <script src="js/home.js"></script>
+    
 </body>
 
 </html>
