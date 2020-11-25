@@ -90,6 +90,10 @@ label[for="myBusLine"] {
     text-decoration: underline;
 }
 
+#transit {
+    margin-top: 5em;
+}
+
 #transit-details.busTips {
     padding-top: 0;
 }
