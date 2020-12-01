@@ -56,8 +56,8 @@ function showLine(data) {
       lineText = "Bus Line " + lineNumber;
     } else {
       lineText = lineNumber;
-
     }
+    
     $('title').text('Details for ' + lineText);
     $('#busLine h1').text(lineText);
     $('#busLine h2').text(data.gsx$linedescription.$t);
@@ -156,6 +156,9 @@ function showWhy(data) {
 function showSchedule(data) {
   /* Line discontinued or remains suspended */
   if (data.gsx$linediscontinued.$t == "TRUE" || data.gsx$remainssuspended.$t == "TRUE") {
+    $('#getSchedule').hide();
+    $('#busSchedule').removeClass('text-center');
+    $('#busSchedule p').css('font-size', 'inherit');
     return;
   } else if (hasChanges(data, false)) { /* if changes, show "New" schedule */
     if (data.gsx$scheduleurl.$t == '') {
