@@ -31,7 +31,7 @@
         function isValidBusLine() {
             let inputEntry = $('#myBusLine').val();
             let index = currentLines.indexOf(inputEntry);
-            if (index > 0) {
+            if (index >= 0) {
                 return true;
             } else {
                 return false;
