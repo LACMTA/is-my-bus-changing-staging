@@ -134,7 +134,7 @@ function showChanges(data) {
 }
 
 function showDetailsAlternatives(data) {
-  if (data.gsx$details.$t != '') {
+  if (data.gsx$detailsnew.$t != '') {
     /* if line discontinued, show "Alternatives" */
     if (data.gsx$linediscontinued.$t == "TRUE") {
       $('#busDetailsAlternatives').append("<h3>Alternatives:</h3>");
@@ -142,7 +142,7 @@ function showDetailsAlternatives(data) {
       $('#busDetailsAlternatives').append("<h3>Details:</h3>");
     }
 
-    $('#busDetailsAlternatives').append(data.gsx$details.$t);
+    $('#busDetailsAlternatives').append(data.gsx$detailsnew.$t);
   }
 }
 
